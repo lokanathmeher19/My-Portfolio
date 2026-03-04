@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaUniversity, FaSchool, FaGraduationCap } from "react-icons/fa";
 
-import ParticlesBackground from "../components/ParticlesBackground";
 
 const AboutMe = () => {
   return (
@@ -20,7 +19,7 @@ const AboutMe = () => {
         padding: "3rem 1rem",
       }}
     >
-      <ParticlesBackground />
+      
       {/* --- About Me + Education Section --- */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

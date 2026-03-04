@@ -7,7 +7,7 @@ import '../index.css'
 // 🖼️ Import Assets
 import photo from '../assets/photo.jpg'
 
-import ParticlesBackground from '../components/ParticlesBackground'
+
 import useScrollNavigation from '../hooks/useScrollNavigation'
 import { PROFESSIONS, QUICK_LINKS, INFO_CARDS } from '../data/portfolioData'
 
@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <section className="home-section">
-      <ParticlesBackground />
+      
       {/* Typing Effect Styles */}
       <style>
         {`

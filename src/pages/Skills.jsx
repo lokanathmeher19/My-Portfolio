@@ -4,7 +4,6 @@ import {
   Binary, Brain, Layers, Users, Puzzle, Palette, RefreshCcw, MessageCircle
 } from "lucide-react";
 import "../styles/Skills.css";
-import ParticlesBackground from "../components/ParticlesBackground";
 
 const SKILLS = [
   { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
@@ -117,7 +116,7 @@ export default function Skills() {
 
   return (
     <section className="skills-container" id="skills" style={{ position: "relative", overflow: "hidden" }}>
-      <ParticlesBackground />
+      
       {/* Header */}
       <motion.div
         className="skills-header"

@@ -1,11 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function Resume() {
   return (
     <section className="container" style={{ padding: "60px 0", position: "relative", overflow: "hidden" }}>
-      <ParticlesBackground />
+      
       <motion.div
         className="card"
         initial={{ opacity: 0, y: 40 }}

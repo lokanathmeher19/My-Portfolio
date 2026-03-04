@@ -19,10 +19,6 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
-      },
-    },
+    // Native Vite chunking automatically chunks the lazy() components we added earlier
   },
 })

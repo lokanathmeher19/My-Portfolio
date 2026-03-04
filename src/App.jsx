@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense, lazy } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Preloader from './components/Preloader'
-import Home from './pages/Home'
-import Projects from './pages/Projects'
-import Gallery from './pages/Gallery'
-import Certificates from './pages/Certificates'
-import Blog from './pages/Blog'
-import Resume from './pages/Resume'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import NotFound from './pages/NotFound'
-import SkillNetwork from './pages/Skills'
+import ParticlesBackground from './components/ParticlesBackground'
+
+// Lazy-loaded routes for massive efficiency gains
+const Home = lazy(() => import('./pages/Home'))
+const Projects = lazy(() => import('./pages/Projects'))
+const Gallery = lazy(() => import('./pages/Gallery'))
+const Certificates = lazy(() => import('./pages/Certificates'))
+const Blog = lazy(() => import('./pages/Blog'))
+const Resume = lazy(() => import('./pages/Resume'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+const SkillNetwork = lazy(() => import('./pages/Skills'))
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -29,6 +32,9 @@ export default function App() {
 
   return (
     <div className="app">
+      {/* Global persistent particle background */}
+      <ParticlesBackground />
+
       {/* 🚀 Mount Preloader */}
       <AnimatePresence>
         {loading && <Preloader />}
@@ -39,21 +45,23 @@ export default function App() {
       {/* Ensure main routes animate cleanly if we want route transitions later */}
       <main style={{ flex: 1, position: 'relative' }}>
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/skills" element={<SkillNetwork />} />
-            <Route path="/certificates" element={<Certificates />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<div style={{ minHeight: '100vh', background: 'transparent' }} />}>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/skills" element={<SkillNetwork />} />
+              <Route path="/certificates" element={<Certificates />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
       </main>
-      <footer className="footer">
+      <footer className="footer" style={{ position: 'relative', zIndex: 10 }}>
         © {new Date().getFullYear()} Lokanath Meher — Built with React
       </footer>
     </div>

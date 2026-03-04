@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import emailjs from "emailjs-com";
 import "../styles/blog.css";
-import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function Blog() {
   const defaultPosts = [
@@ -136,7 +135,7 @@ export default function Blog() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <ParticlesBackground />
+      
       <motion.h2
         className="blog-title"
         initial={{ y: -15, opacity: 0 }}

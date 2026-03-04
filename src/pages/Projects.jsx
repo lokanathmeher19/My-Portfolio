@@ -1,7 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
-import ParticlesBackground from "../components/ParticlesBackground";
 
 import { PROJECTS } from '../data/portfolioData';
 
@@ -19,7 +18,7 @@ export default function Projects() {
       id="projects"
       style={{ paddingBottom: 80, position: "relative", overflow: "hidden" }}
     >
-      <ParticlesBackground />
+      
       <div className="card" style={{ background: 'transparent', padding: 0 }}>
         <div style={{ textAlign: 'center', marginBottom: 60, position: 'relative' }}>
           <motion.div

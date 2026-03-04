@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Bot } from "lucide-react";
 import "../styles/Gallery.css";
-import ParticlesBackground from "../components/ParticlesBackground";
 
 // 🖼️ Import Icons
 import nxtwave_logo from "../assets/gallery/nxtwave_logo.png";
@@ -394,7 +393,7 @@ export default function Gallery() {
       animate="visible"
       exit="hidden"
     >
-      <ParticlesBackground />
+      
       {/* 🌟 Title */}
       <motion.h2 className="gallery-title" variants={childVariants}>
         Gallery

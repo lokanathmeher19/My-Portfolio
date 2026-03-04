@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Award } from "lucide-react";
 
-import ParticlesBackground from "../components/ParticlesBackground";
 
 // 🖼️ Import Certificate Images
 import nxtwave_responsive from "../assets/certs/nxtwave_responsive.jpg";
@@ -175,7 +174,7 @@ export default function Certificates() {
 
   return (
     <section className="container" style={{ padding: "40px 0", position: "relative", overflow: "hidden" }}>
-      <ParticlesBackground />
+      
       <div className="card" style={{ background: "#111", borderRadius: 12, padding: 24 }}>
         <h2 style={{ fontSize: "1.8rem", color: "#fff", marginBottom: 4 }}>Certificates 🏅</h2>
         <p className="lead" style={{ color: "#aaa" }}>

@@ -63,12 +63,14 @@ const ParticlesBackground = () => {
                 particlesArray[i].draw();
 
                 // Connect particles
-                for (let j = i; j < particlesArray.length; j++) {
+                for (let j = i + 1; j < particlesArray.length; j++) {
                     const dx = particlesArray[i].x - particlesArray[j].x;
                     const dy = particlesArray[i].y - particlesArray[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const distSq = dx * dx + dy * dy;
 
-                    if (distance < 120) {
+                    // 14400 is 120 * 120. Math.sqrt is expensive, so check squared distance first!
+                    if (distSq < 14400) {
+                        const distance = Math.sqrt(distSq);
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(0, 255, 200, ${0.15 - distance / 800})`;
                         ctx.lineWidth = 0.5;

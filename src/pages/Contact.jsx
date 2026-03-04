@@ -4,7 +4,6 @@ import emailjs from "emailjs-com";
 import toast from "react-hot-toast";
 import "../styles/Contact.css"
 import '../index.css'
-import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -71,7 +70,7 @@ export default function Contact() {
 
   return (
     <section className="contact-section" style={{ position: "relative", overflow: "hidden" }}>
-      <ParticlesBackground />
+      
       <motion.h1
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}

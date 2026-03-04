@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Bot } from "lucide-react";
-import "../CSS/Gallery.css";
+import "../styles/Gallery.css";
 import ParticlesBackground from "../components/ParticlesBackground";
 
 // 🖼️ Import Icons

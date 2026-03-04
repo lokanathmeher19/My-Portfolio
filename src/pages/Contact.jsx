@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "emailjs-com";
-
-import "../CSS/Contact.css"
+import toast from "react-hot-toast";
+import "../styles/Contact.css"
 import '../index.css'
 import ParticlesBackground from "../components/ParticlesBackground";
 
@@ -13,7 +13,6 @@ export default function Contact() {
     subject: "",
     message: "",
   });
-  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,18 +22,18 @@ export default function Contact() {
     e.preventDefault();
 
     if (!form.name || !form.contact || !form.subject || !form.message) {
-      setStatus("⚠️ Please fill in all fields.");
+      toast.error("Please fill in all fields.");
       return;
     }
 
     const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     const isEmail = emailPattern.test(form.contact);
     if (!isEmail && isNaN(form.contact)) {
-      setStatus("⚠️ Please enter a valid email or phone number.");
+      toast.error("Please enter a valid email or phone number.");
       return;
     }
 
-    setStatus("Sending...");
+    const toastId = toast.loading("Sending message...");
 
     emailjs
       .send(
@@ -51,12 +50,12 @@ export default function Contact() {
       )
       .then(
         () => {
-          setStatus("✅ Message sent successfully!");
+          toast.success("Message sent successfully!", { id: toastId });
           setForm({ name: "", contact: "", subject: "", message: "" });
         },
         (error) => {
           console.error("FAILED...", error);
-          setStatus("❌ Failed to send. Try again later.");
+          toast.error("Failed to send. Try again later.", { id: toastId });
         }
       );
   };
@@ -133,8 +132,6 @@ export default function Contact() {
         <motion.button type="submit" className="contact-btn" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           🚀 Send Message
         </motion.button>
-
-        {status && <motion.p initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="contact-status">{status}</motion.p>}
       </motion.form>
     </section>
   );

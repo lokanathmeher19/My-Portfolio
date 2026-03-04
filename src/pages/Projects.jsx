@@ -1,36 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { BookOpen, Orbit, ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import ParticlesBackground from "../components/ParticlesBackground";
 
-// 🖼️ Import Project Images
-import novels_img from '../assets/novels.png'
-import solar_img from '../assets/solar.png'
+import { PROJECTS } from '../data/portfolioData';
 
-const PROJECTS = [
-  {
-    title: 'The Top 100 Novels',
-    desc: "Immerse yourself in India's finest literary collection. Explore beautifully curated novels with stunning covers, detailed info, and a premium reading experience.",
-    tag: 'LITERATURE',
-    color: '#ff4b6e',
-    icon: <BookOpen size={28} color="white" />,
-    img: novels_img,
-    features: ['100 Curated Novels', 'User Authentication', 'Premium UI/UX'],
-    link: 'https://thesolarsystem.free.nf/loginpage/novels.html',
-    btnText: 'Explore Collection'
-  },
-  {
-    title: 'Solar System Explorer',
-    desc: 'Journey through our cosmic neighborhood with stunning CSS animations. Discover planets, their moons, and fascinating astronomical facts.',
-    tag: 'ASTRONOMY',
-    color: '#0ea5e9',
-    icon: <Orbit size={28} color="white" />,
-    img: solar_img,
-    features: ['9 Celestial Bodies', 'Interactive Animations', 'CSS-Only Design'],
-    link: 'https://thesolarsystem.free.nf/solarpage/index.html',
-    btnText: 'Explore Universe'
-  }
-]
 
 import useScrollNavigation from '../hooks/useScrollNavigation'
 

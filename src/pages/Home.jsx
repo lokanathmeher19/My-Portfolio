@@ -1,39 +1,18 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import "../CSS/Home.css"
+import "../styles/Home.css"
 import '../index.css'
 
 
 // 🖼️ Import Assets
 import photo from '../assets/photo.jpg'
-import githubLogo from '../assets/github.png'
-import linkedinLogo from '../assets/linkedin.png'
-import gmailLogo from '../assets/gmail.png'
-import whatsappLogo from '../assets/whatsapp.png'
-import instagramLogo from '../assets/insta.png'
-import telegramLogo from '../assets/telegram.png'
 
 import ParticlesBackground from '../components/ParticlesBackground'
-
 import useScrollNavigation from '../hooks/useScrollNavigation'
+import { PROFESSIONS, QUICK_LINKS, INFO_CARDS } from '../data/portfolioData'
 
 export default function Home() {
   useScrollNavigation('/projects', null)
-  const professions = [
-    'Cyber Threat Analyst(Learner)',
-    'Python Programmer',
-    'Full Stack Developer',
-    'MERN Stack Developer',
-  ]
-
-  const quickLinks = [
-    { img: githubLogo, title: 'GitHub', link: 'https://github.com/lokanathmeher19' },
-    { img: linkedinLogo, title: 'LinkedIn', link: 'https://www.linkedin.com/in/er-lokanath-meher-a79506353' },
-    { img: gmailLogo, title: 'Email', link: 'https://mail.google.com/mail/?view=cm&fs=1&to=meherlokanath314@gmail.com' },
-    { img: whatsappLogo, title: 'WhatsApp', link: 'https://wa.me/918018677061' },
-    { img: instagramLogo, title: 'Instagram', link: 'https://www.instagram.com/nixcoder_19/' },
-    { img: telegramLogo, title: 'Telegram', link: 'http://t.me/ScorpioX99' },
-  ]
 
   return (
     <section className="home-section">
@@ -101,7 +80,7 @@ export default function Home() {
 
           {/* Profession Tags */}
           <motion.div className="profession-tags">
-            {professions.map((role, i) => (
+            {PROFESSIONS.map((role, i) => (
               <motion.div key={i} whileHover={{ scale: 1.05, background: 'linear-gradient(90deg,var(--accent),var(--accent-2))' }} transition={{ type: 'spring', stiffness: 200 }} className="profession-tag">
                 {role}
               </motion.div>
@@ -110,11 +89,7 @@ export default function Home() {
 
           {/* Info Cards */}
           <motion.div className="info-cards">
-            {[
-              { label: '📍 Location', value: 'Bargarh, Odisha, 768028' },
-              { label: '💼 Expertise', value: 'Python,Problem Solving' },
-              { label: '📧 Contact', value: 'meherlokanath314@gmail.com' },
-            ].map((info, i) => (
+            {INFO_CARDS.map((info, i) => (
               <motion.div key={i} whileHover={{ y: -4, scale: 1.05 }} transition={{ type: 'spring', stiffness: 250 }} className="info-card">
                 <strong>{info.label}</strong>
                 <p>{info.value}</p>
@@ -128,7 +103,7 @@ export default function Home() {
       <motion.div className="quick-links">
         <h2 className="quick-links-title">Connect with me</h2>
         <div className="quick-links-list">
-          {quickLinks.map((item, i) => (
+          {QUICK_LINKS.map((item, i) => (
             <motion.a
               key={i}
               href={item.link}
@@ -152,3 +127,5 @@ export default function Home() {
     </section>
   )
 }
+
+

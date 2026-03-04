@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   Binary, Brain, Layers, Users, Puzzle, Palette, RefreshCcw, MessageCircle
 } from "lucide-react";
-import "./Skills.css";
+import "../styles/Skills.css";
 import ParticlesBackground from "../components/ParticlesBackground";
 
 const SKILLS = [

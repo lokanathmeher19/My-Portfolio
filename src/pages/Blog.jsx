@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import emailjs from "emailjs-com";
-import "./blog.css";
+import "../styles/blog.css";
 import ParticlesBackground from "../components/ParticlesBackground";
 
 export default function Blog() {

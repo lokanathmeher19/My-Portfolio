@@ -23,10 +23,10 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // Only show preloader on initial page load, hide it after 1.8s
+    // Show preloader for 2.8 seconds to allow the awesome cyber animation to play
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1800);
+    }, 2800);
     return () => clearTimeout(timer);
   }, []);
 

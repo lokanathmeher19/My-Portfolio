@@ -240,7 +240,7 @@ export default function Resume() {
           }}
         >
           <iframe
-            src="resume.pdf#zoom=500"
+            src="LOKANATH MEHER (2).pdf#zoom=500"
             title="Lokanath Meher Resume"
             style={{
               width: "100%",
@@ -253,8 +253,8 @@ export default function Resume() {
 
         {/* Download Button */}
         <motion.a
-          href="resume.pdf"
-          download
+          href="LOKANATH MEHER (2).pdf"
+          download="Lokanath_Meher_Resume.pdf"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           style={{

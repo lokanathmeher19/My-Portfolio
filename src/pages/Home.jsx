@@ -20,10 +20,10 @@ import useScrollNavigation from '../hooks/useScrollNavigation'
 export default function Home() {
   useScrollNavigation('/projects', null)
   const professions = [
-    'Cyber Threat Analyst & Trainee',
-    'Python Programmer (Beginner)',
-    'Frontend Developer (React Learner)',
-    'Backend Developer (Node.js Beginner)',
+    'Cyber Threat Analyst(Learner)',
+    'Python Programmer',
+    'Full Stack Developer',
+    'MERN Stack Developer',
   ]
 
   const quickLinks = [
@@ -112,7 +112,7 @@ export default function Home() {
           <motion.div className="info-cards">
             {[
               { label: '📍 Location', value: 'Bargarh, Odisha, 768028' },
-              { label: '💼 Expertise', value: 'AI/ML, Problem Solving' },
+              { label: '💼 Expertise', value: 'Python,Problem Solving' },
               { label: '📧 Contact', value: 'meherlokanath314@gmail.com' },
             ].map((info, i) => (
               <motion.div key={i} whileHover={{ y: -4, scale: 1.05 }} transition={{ type: 'spring', stiffness: 250 }} className="info-card">

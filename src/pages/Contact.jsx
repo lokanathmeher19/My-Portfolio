@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import emailjs from "emailjs-com";
 import toast from "react-hot-toast";
 import "../styles/Contact.css"
 import '../index.css'
@@ -34,29 +33,32 @@ export default function Contact() {
 
     const toastId = toast.loading("Sending message...");
 
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: form.name,
-          contact_info: form.contact,
-          subject: form.subject,
-          message: form.message,
-          to_email: "meherlokanath314@gmail.com",
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
+    fetch("https://formsubmit.co/ajax/meherlokanath314@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        contact: form.contact,
+        subject: form.subject,
+        message: form.message,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success === "true" || data.success === true) {
           toast.success("Message sent successfully!", { id: toastId });
           setForm({ name: "", contact: "", subject: "", message: "" });
-        },
-        (error) => {
-          console.error("FAILED...", error);
+        } else {
           toast.error("Failed to send. Try again later.", { id: toastId });
         }
-      );
+      })
+      .catch((error) => {
+        console.error("FAILED...", error);
+        toast.error("Failed to send. Try again later.", { id: toastId });
+      });
   };
 
   const quickLinks = [
@@ -70,7 +72,7 @@ export default function Contact() {
 
   return (
     <section className="contact-section" style={{ position: "relative", overflow: "hidden" }}>
-      
+
       <motion.h1
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}

@@ -3,16 +3,16 @@
 }
 
 .resume-card {
-  background: #0b0b0b;
+  background: var(--card);
   border-radius: 16px;
   padding: 40px 30px;
   color: #e5e5e5;
-  box-shadow: 0 0 25px rgba(0, 153, 255, 0.1);
+  box-shadow: 0 0 25px rgba(0, 255, 157, 0.1);
 }
 
 .resume-title {
   font-size: 28px;
-  color: #00b4ff;
+  color: var(--accent);
   margin-bottom: 12px;
 }
 
@@ -27,14 +27,14 @@
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 20px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   padding: 24px 20px;
   border-radius: 12px;
 }
 
 .profile-info h3 {
   font-size: 24px;
-  color: #00b4ff;
+  color: var(--accent);
   margin-bottom: 4px;
 }
 
@@ -45,30 +45,30 @@
 }
 
 .profile-summary {
-  background: linear-gradient(135deg, #00b4ff44, #0b0b0b);
+  background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), var(--card));
   border-radius: 12px;
   padding: 14px 20px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(0, 255, 157, 0.2);
   max-width: 360px;
   font-size: 14px;
   line-height: 1.6;
 }
 
 .profile-summary strong {
-  color: #00b4ff;
+  color: var(--accent);
 }
 
 .resume-section {
   margin-top: 40px;
   border-radius: 12px;
   padding: 20px 24px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .resume-section h4 {
   font-size: 20px;
-  color: #00b4ff;
+  color: var(--accent);
   margin-bottom: 12px;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .skills-list span {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   padding: 6px 12px;
   border-radius: 8px;
   font-size: 13px;
@@ -115,19 +115,27 @@
   width: 100%;
   height: 650px;
   border: none;
-  background: #111;
+  background: var(--card);
   border-radius: 12px;
   overflow: hidden;
+  border: 1px solid rgba(0, 255, 157, 0.15);
 }
 
 .resume-download {
   display: inline-block;
   margin-top: 20px;
-  background: #00b4ff;
-  color: #fff;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #000;
   padding: 10px 22px;
   border-radius: 8px;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.3px;
+  box-shadow: 0 4px 15px rgba(0, 255, 157, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resume-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 157, 0.4);
 }

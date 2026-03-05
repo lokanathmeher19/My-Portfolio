@@ -1,37 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ScanFace, Unlock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Lock, Unlock, Terminal, Cpu } from 'lucide-react';
+import profilePhoto from '../assets/photo.jpg';
 
 export default function Preloader() {
     const [text, setText] = useState('');
     const [unlocked, setUnlocked] = useState(false);
-    const fullText = "SYSTEM.AUTHORIZED // LOKANATH";
+    const [logs, setLogs] = useState([]);
+    const fullText = "USER: LOKANATH MEHER";
 
     // Matrix/Hacker Decrypt Typing Effect
     useEffect(() => {
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
         let iteration = 0;
         let interval = setInterval(() => {
             setText(fullText.split("").map((letter, index) => {
-                if (index < iteration) {
-                    return fullText[index];
-                }
-                return letters[Math.floor(Math.random() * 42)];
+                if (index < iteration) return fullText[index];
+                return letters[Math.floor(Math.random() * letters.length)];
             }).join(""));
 
-            if (iteration >= fullText.length) {
-                clearInterval(interval);
+            if (iteration >= fullText.length) clearInterval(interval);
+            iteration += 1 / 2;
+        }, 40);
+
+        // Boot system logs
+        const bootSequence = [
+            "> INITIALIZING KERNEL...",
+            "> BYPASSING SECURITY PROTOCOLS...",
+            "> DECRYPTING PROFILE DATA...",
+            "> LOADING CYBER-DEFENSE MODULES...",
+            "> ESTABLISHING SECURE CONNECTION...",
+            "> BIOMETRIC SCAN IN PROGRESS..."
+        ];
+
+        let logIndex = 0;
+        const logInterval = setInterval(() => {
+            if (logIndex < bootSequence.length) {
+                setLogs(prev => [...prev.slice(-3), bootSequence[logIndex]]);
+                logIndex++;
+            } else {
+                clearInterval(logInterval);
             }
-            iteration += 1 / 3;
-        }, 30);
+        }, 350);
 
         // Face ID Unlock Trigger (matches the "ACCESS GRANTED" time)
         const unlockTimeout = setTimeout(() => {
             setUnlocked(true);
-        }, 2200);
+        }, 2500);
 
         return () => {
             clearInterval(interval);
+            clearInterval(logInterval);
             clearTimeout(unlockTimeout);
         };
     }, []);
@@ -39,167 +58,209 @@ export default function Preloader() {
     return (
         <motion.div
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+            exit={{ opacity: 0, filter: "blur(10px)", scale: 1.1 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
             style={{
                 position: 'fixed',
                 inset: 0,
-                backgroundColor: '#030305',
+                backgroundColor: '#050505',
+                backgroundImage: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, #050505 70%)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 zIndex: 99999,
-                overflow: 'hidden'
+                overflow: 'hidden',
+                fontFamily: `'Courier New', Courier, monospace`
             }}
         >
-            {/* Background Tech Grid */}
+            {/* Background Grid Lines (Cyberpunk feel) */}
             <div style={{
-                position: 'absolute', inset: 0,
-                backgroundImage: `
-                    linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px)
-                `,
-                backgroundSize: '30px 30px',
-                zIndex: 1, pointerEvents: 'none'
+                position: 'absolute', inset: 0, opacity: 0.1,
+                backgroundImage: `linear-gradient(rgba(16, 185, 129, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 185, 129, 0.2) 1px, transparent 1px)`,
+                backgroundSize: '40px 40px', zIndex: 0
             }} />
 
-            {/* CRT TV Scanlines */}
-            <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))',
-                backgroundSize: '100% 2px, 3px 100%', pointerEvents: 'none', zIndex: 2
-            }} />
+            {/* Top Terminal Header */}
+            <div style={{ position: 'absolute', top: 30, left: 30, color: '#10b981', fontSize: '0.9rem', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '8px', opacity: 0.8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Terminal size={18} /> ROOT TERMINAL v9.0.1</div>
+                <div>SYS_TICK: {Math.floor(Date.now() / 1000)}</div>
+                <div style={{ color: '#38bdf8' }}>STATUS: {unlocked ? 'SECURED' : 'LOCKED'}</div>
+            </div>
 
-            {/* Glowing HUD Center */}
-            <div style={{ position: 'relative', width: 280, height: 280, display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>
+            {/* Boot Logs */}
+            <div style={{ position: 'absolute', bottom: 40, left: 30, color: '#10b981', fontSize: '0.85rem', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '6px', opacity: 0.7 }}>
+                {logs.map((log, i) => (
+                    <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
+                        {log}
+                    </motion.div>
+                ))}
+                {unlocked && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ color: '#38bdf8' }}>{"> ACCESS GRANTED."}</motion.div>}
+            </div>
 
-                {/* Advanced SVG Geometric HUD */}
-                <svg viewBox="0 0 100 100" style={{ position: 'absolute', width: '100%', height: '100%', overflow: 'visible' }}>
+            {/* Holographic CPU / HUD Elements */}
+            <div style={{ position: 'absolute', top: 40, right: 40, opacity: 0.6, zIndex: 1 }}>
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}>
+                    <Cpu size={40} color={unlocked ? '#38bdf8' : '#10b981'} />
+                </motion.div>
+            </div>
 
-                    {/* Outer Thin Ring */}
-                    <motion.circle cx="50" cy="50" r="48" fill="none" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="0.5" />
+            {/* The Photo and Orbital Rings Container */}
+            <div style={{ position: 'relative', width: 340, height: 340, display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
 
-                    {/* Rotating Dashed Ring 1 (Blue) */}
-                    <motion.circle cx="50" cy="50" r="48" fill="none" stroke="#38bdf8" strokeWidth="1" strokeDasharray="10 20 50 10"
-                        animate={{ strokeDashoffset: [0, 100] }} transition={{ duration: 5, repeat: Infinity, ease: "linear" }} />
-
-                    {/* Counter-rotating Dashed Ring 2 (Purple) */}
-                    <motion.circle cx="50" cy="50" r="38" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="30 40 10 20"
-                        animate={{ strokeDashoffset: [100, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} />
-
-                    {/* Pulsing Central Hexagon */}
-                    <motion.polygon points="50,5 89,27 89,73 50,95 11,73 11,27" fill="rgba(56, 189, 248, 0.02)" stroke="rgba(56, 189, 248, 0.3)" strokeWidth="1"
-                        animate={{ scale: [0.95, 1.05, 0.95], opacity: [0.5, 1, 0.5] }} style={{ transformOrigin: 'center' }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} />
-
-                    {/* Fast Rotating Inner Triangle */}
-                    <motion.polygon points="50,18 78,66 22,66" fill="none" stroke="rgba(168, 85, 247, 0.4)" strokeWidth="1"
-                        animate={{ rotate: 360 }} style={{ transformOrigin: 'center' }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} />
-
-                </svg>
-
-                {/* Top Inner Badge: LM Initials */}
+                {/* Outer Complex HUD Ring */}
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                    style={{ position: 'absolute', top: 45, zIndex: 10 }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    style={{
+                        position: 'absolute', width: '100%', height: '100%',
+                        borderRadius: '50%', border: '1px solid rgba(16, 185, 129, 0.2)',
+                        borderTop: '2px solid #10b981', borderBottom: '2px solid #10b981'
+                    }}
+                />
+
+                <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    style={{
+                        position: 'absolute', width: '85%', height: '85%',
+                        borderRadius: '50%', border: '2px dashed rgba(56, 189, 248, 0.3)',
+                        borderLeft: '2px solid #38bdf8', borderRight: '2px solid #38bdf8'
+                    }}
+                />
+
+                {/* Data Nodes orbiting */}
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    style={{ position: 'absolute', width: '70%', height: '70%', borderRadius: '50%', zIndex: 3 }}
                 >
-                    <h1 style={{
-                        fontSize: '1.8rem',
-                        fontWeight: '900',
-                        margin: 0,
-                        background: 'linear-gradient(135deg, #ffffff, #38bdf8)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        filter: 'drop-shadow(0px 0px 8px rgba(56, 189, 248, 0.8))',
-                        letterSpacing: '2px',
-                    }}>
-                        LM
-                    </h1>
+                    <div style={{ position: 'absolute', top: -4, left: '50%', width: 8, height: 8, background: '#10b981', borderRadius: '50%', boxShadow: '0 0 15px #10b981' }} />
+                    <div style={{ position: 'absolute', bottom: -4, left: '50%', width: 8, height: 8, background: '#38bdf8', borderRadius: '50%', boxShadow: '0 0 15px #38bdf8' }} />
                 </motion.div>
 
-                {/* Central Identity Box (Face Scanner) */}
+                {/* Inner Scan Ring */}
                 <motion.div
-                    initial={{ scale: 0, rotate: -45 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', damping: 12, delay: 0.2 }}
+                    animate={unlocked ? { scale: 1.05, borderColor: '#38bdf8', boxShadow: '0 0 40px rgba(56,189,248,0.5)' } : { scale: 1, borderColor: '#10b981', boxShadow: '0 0 20px rgba(16,185,129,0.3)' }}
+                    transition={{ duration: 0.5 }}
                     style={{
-                        position: 'absolute', width: 90, height: 90,
-                        background: unlocked ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.05)',
-                        backdropFilter: 'blur(5px)',
-                        border: unlocked ? '1px solid #10b981' : '1px solid #38bdf8',
-                        boxShadow: unlocked ? '0 0 30px rgba(16,185,129,0.5), inset 0 0 20px rgba(16,185,129,0.2)' : '0 0 20px rgba(56,189,248,0.3), inset 0 0 20px rgba(56,189,248,0.2)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
-                        transition: 'all 0.4s ease',
-                        overflow: 'hidden'
+                        position: 'absolute',
+                        width: '60%',
+                        height: '60%',
+                        borderRadius: '50%',
+                        border: '3px solid',
+                        zIndex: 2,
+                    }}
+                />
+
+                {/* The Profile Photo */}
+                <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                    style={{
+                        position: 'relative',
+                        width: '58%',
+                        height: '58%',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        zIndex: 3,
                     }}
                 >
-                    {!unlocked ? (
-                        <>
-                            <motion.div
-                                animate={{ opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                            >
-                                <ScanFace size={50} color="#38bdf8" strokeWidth={1.5} style={{ filter: 'drop-shadow(0px 0px 8px #38bdf8)' }} />
-                            </motion.div>
+                    <img
+                        src={profilePhoto}
+                        alt="Profile"
+                        style={{
+                            width: '100%', height: '100%', objectFit: 'cover',
+                            objectPosition: 'center top',
+                            filter: unlocked ? 'brightness(1.1) contrast(1.1)' : 'brightness(0.6) sepia(100%) hue-rotate(100deg) saturate(300%) contrast(1.2)', // Cyber-green initially
+                            transition: 'filter 0.5s ease',
+                            transform: 'scale(1.05)'
+                        }}
+                    />
 
-                            {/* Sweeping Laser Line for Face ID Scan */}
-                            <motion.div
-                                animate={{ y: [-45, 45, -45] }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                style={{
-                                    position: 'absolute',
-                                    width: '100%',
-                                    height: '2px',
-                                    background: '#38bdf8',
-                                    boxShadow: '0 0 10px 2px #38bdf8',
-                                    zIndex: 10
-                                }}
-                            />
-                        </>
-                    ) : (
+                    {/* Scanning Core Laser Grid */}
+                    {!unlocked && (
+                        <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(16,185,129,0.2) 2px, rgba(16,185,129,0.2) 4px)' }} />
+                    )}
+
+                    {!unlocked && (
                         <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: [0, 1.3, 1] }}
-                            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                            animate={{ y: [-50, 250, -50] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                            style={{
+                                position: 'absolute', top: 0, left: 0, width: '100%', height: '15px',
+                                background: 'linear-gradient(to bottom, transparent, rgba(16, 185, 129, 0.8), transparent)',
+                                boxShadow: '0 0 25px 10px rgba(16, 185, 129, 0.4)',
+                                zIndex: 4
+                            }}
+                        />
+                    )}
+
+                    {/* Unlock Glow Overlay */}
+                    {unlocked && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            style={{
+                                position: 'absolute', inset: 0,
+                                background: 'rgba(56, 189, 248, 0.2)',
+                                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                zIndex: 5
+                            }}
                         >
-                            <Unlock size={50} color="#10b981" strokeWidth={2} style={{ filter: 'drop-shadow(0px 0px 10px #10b981)' }} />
                         </motion.div>
                     )}
                 </motion.div>
-            </div>
 
-            {/* Hacker Decrypt Text */}
-            <div style={{ marginTop: 50, fontFamily: 'monospace', color: '#38bdf8', fontSize: '1rem', letterSpacing: '4px', textShadow: '0 0 8px #38bdf8', zIndex: 10 }}>
-                {text}
-            </div>
-
-            {/* Neon Progress Bar */}
-            <div style={{ width: 260, height: 3, background: 'rgba(168, 85, 247, 0.15)', marginTop: 25, position: 'relative', overflow: 'hidden', zIndex: 10, borderRadius: 2 }}>
+                {/* Lock/Unlock Icon overlapping */}
                 <motion.div
-                    initial={{ width: '0%' }} animate={{ width: '100%' }} transition={{ duration: 2.2, ease: 'easeOut', delay: 0.3 }}
-                    style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, transparent, #a855f7, #38bdf8)', boxShadow: '0 0 15px #a855f7' }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    style={{ position: 'absolute', bottom: '10%', zIndex: 10 }}
+                >
+                    <div style={{
+                        background: '#050505', padding: '10px', borderRadius: '50%',
+                        border: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}`,
+                        boxShadow: `0 0 20px ${unlocked ? '#38bdf8' : '#10b981'}`
+                    }}>
+                        {unlocked ? <Unlock color="#38bdf8" size={24} /> : <Lock color="#10b981" size={24} />}
+                    </div>
+                </motion.div>
+
+            </div>
+
+            {/* Main Status Text */}
+            <div style={{
+                marginTop: 40,
+                color: unlocked ? '#38bdf8' : '#10b981',
+                fontSize: '1.2rem', letterSpacing: '4px', fontWeight: 'bold',
+                textShadow: unlocked ? '0 0 15px #38bdf8' : '0 0 15px #10b981',
+                zIndex: 10, transition: 'color 0.4s', textAlign: 'center'
+            }}>
+                {unlocked ? "[ NEURAL LINK ESTABLISHED ]" : text}
+            </div>
+
+            {/* Loading Progress Bar */}
+            <div style={{ width: 320, height: 4, background: 'rgba(255,255,255,0.05)', marginTop: 25, position: 'relative', overflow: 'hidden', zIndex: 10, borderRadius: 2 }}>
+                <motion.div
+                    initial={{ width: '0%' }} animate={{ width: '100%' }} transition={{ duration: 2.5, ease: 'easeOut' }}
+                    style={{
+                        width: '100%', height: '100%',
+                        background: unlocked ? '#38bdf8' : 'linear-gradient(90deg, transparent, #10b981, #10b981)',
+                        boxShadow: unlocked ? '0 0 20px #38bdf8' : '0 0 20px #10b981'
+                    }}
                 />
             </div>
 
-            {/* Final Status */}
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} style={{ color: '#10b981', marginTop: 15, fontFamily: 'monospace', fontSize: '0.85rem', zIndex: 10, letterSpacing: '3px', textShadow: '0 0 10px #10b981' }}>
-                [ ACCESS GRANTED ]
-            </motion.div>
-
-            {/* Random binary background flashes for extra effect */}
-            <motion.div
-                animate={{ opacity: [0, 0.05, 0, 0.02, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                style={{ position: 'absolute', top: 20, left: 20, color: '#38bdf8', fontFamily: 'monospace', fontSize: 10, writingMode: 'vertical-rl', pointerEvents: 'none' }}
-            >
-                01001100 01101111 01101011 01100001 01101110 01100001 01110100 01101000
-            </motion.div>
-            <motion.div
-                animate={{ opacity: [0, 0.02, 0, 0.05, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
-                style={{ position: 'absolute', bottom: 20, right: 20, color: '#a855f7', fontFamily: 'monospace', fontSize: 10, pointerEvents: 'none' }}
-            >
-                01001101 01100101 01101000 01100101 01110010
-            </motion.div>
+            {/* Cyberpunk decorative elements */}
+            <div style={{ position: 'absolute', bottom: 40, right: 40, display: 'flex', gap: '10px', opacity: 0.5 }}>
+                <div style={{ width: 20, height: 20, borderTop: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}`, borderRight: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}` }} />
+                <div style={{ width: 20, height: 20, borderTop: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}`, borderRight: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}` }} />
+                <div style={{ width: 20, height: 20, borderTop: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}`, borderRight: `2px solid ${unlocked ? '#38bdf8' : '#10b981'}` }} />
+            </div>
+            <div style={{ position: 'absolute', top: 40, left: 40, width: 50, height: 50, borderTop: `3px solid #10b981`, borderLeft: `3px solid #10b981`, opacity: 0.5 }} />
+            <div style={{ position: 'absolute', bottom: 40, right: 40, width: 50, height: 50, borderBottom: `3px solid #10b981`, borderRight: `3px solid #10b981`, opacity: 0.5 }} />
 
         </motion.div>
     );

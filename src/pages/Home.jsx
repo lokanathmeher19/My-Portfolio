@@ -75,7 +75,7 @@ export default function Home() {
 
           {/* Typing Animated Text */}
           <p className="typing-effect">
-            Cybersecurity Analyst & Explorer | Frontend Developer | Tech Explorer
+               Software Developer | Cybersecurity Analyst | Tech Explorer
           </p>
 
           {/* Profession Tags */}

@@ -13,6 +13,22 @@ const ParticlesBackground = () => {
         let animationFrameId;
         let particlesArray = [];
 
+        // Mouse object to track interaction
+        const mouse = { x: null, y: null, radius: 120 };
+
+        const handleMouseMove = (event) => {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+        };
+
+        const handleMouseOut = () => {
+            mouse.x = null;
+            mouse.y = null;
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseout', handleMouseOut);
+
         const handleResize = () => {
             const c = canvasRef.current;
             if (!c) return;
@@ -30,6 +46,23 @@ const ParticlesBackground = () => {
                 this.speedY = Math.random() * 1 - 0.5;
             }
             update() {
+                // Mouse repulsion effect
+                if (mouse.x != null && mouse.y != null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        const directionX = forceDirectionX * force * 2;
+                        const directionY = forceDirectionY * force * 2;
+
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+
                 this.x += this.speedX;
                 this.y += this.speedY;
 
@@ -40,7 +73,7 @@ const ParticlesBackground = () => {
                 else if (this.y < 0) this.y = canvas.height;
             }
             draw() {
-                ctx.fillStyle = 'rgba(0, 255, 200, 0.5)';
+                ctx.fillStyle = 'rgba(0, 255, 200, 0.6)';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -49,7 +82,7 @@ const ParticlesBackground = () => {
 
         const init = () => {
             particlesArray = [];
-            const numberOfParticles = Math.min(100, (canvas.width * canvas.height) / 9000);
+            const numberOfParticles = Math.min(120, (canvas.width * canvas.height) / 8000);
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
@@ -62,20 +95,35 @@ const ParticlesBackground = () => {
                 particlesArray[i].update();
                 particlesArray[i].draw();
 
-                // Connect particles
+                // Connect particles to each other
                 for (let j = i + 1; j < particlesArray.length; j++) {
                     const dx = particlesArray[i].x - particlesArray[j].x;
                     const dy = particlesArray[i].y - particlesArray[j].y;
                     const distSq = dx * dx + dy * dy;
 
-                    // 14400 is 120 * 120. Math.sqrt is expensive, so check squared distance first!
-                    if (distSq < 14400) {
+                    if (distSq < 12000) {
                         const distance = Math.sqrt(distSq);
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(0, 255, 200, ${0.15 - distance / 800})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Connect particles to mouse with a distinct cyber-cyan color
+                if (mouse.x != null && mouse.y != null) {
+                    const dx = particlesArray[i].x - mouse.x;
+                    const dy = particlesArray[i].y - mouse.y;
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq < 15000) {
+                        const distance = Math.sqrt(distSq);
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 210, 255, ${0.25 - distance / 1000})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
                         ctx.stroke();
                     }
                 }
@@ -93,6 +141,8 @@ const ParticlesBackground = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseout', handleMouseOut);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);

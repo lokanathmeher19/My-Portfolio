@@ -4,11 +4,12 @@ import { motion } from "framer-motion";
 export default function Resume() {
   return (
     <section className="container" style={{ padding: "60px 0", position: "relative", overflow: "hidden" }}>
-      
+
       <motion.div
         className="card"
         initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.8 }}
         style={{
           background: "#0b0b0b",
@@ -20,7 +21,8 @@ export default function Resume() {
       >
         <motion.h2
           initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           style={{ fontSize: 28, color: "#00b4ff", marginBottom: 12 }}
         >
@@ -29,7 +31,8 @@ export default function Resume() {
 
         <motion.p
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.3 }}
           style={{ color: "#aaa", marginBottom: 25 }}
         >
@@ -38,9 +41,10 @@ export default function Resume() {
 
         {/* Profile Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -92,16 +96,19 @@ export default function Resume() {
 
         {/* Education Section with Border Box */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
           style={{
             marginTop: 40,
             border: "1px solid rgba(255,255,255,0.1)",
             borderRadius: 12,
             padding: "20px 24px",
             background: "rgba(255,255,255,0.03)",
+            transition: "all 0.3s ease",
           }}
+          whileHover={{ boxShadow: "0 10px 30px rgba(0, 180, 255, 0.15)", borderColor: "rgba(0, 180, 255, 0.4)", transform: "translateY(-5px)" }}
         >
           <h4 style={{ fontSize: 20, color: "#00b4ff", marginBottom: 12 }}>
             🎓 Education
@@ -139,23 +146,25 @@ export default function Resume() {
 
         {/* Projects */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
           style={{ marginTop: 40 }}
         >
           <h4 style={{ fontSize: 20, color: "#00b4ff", marginBottom: 12 }}>💼 Projects</h4>
           <ul style={{ listStyle: "none", padding: 0, margin: 0, lineHeight: 1.8 }}>
-            <li>1️⃣ <strong>The Top 100 Novels:</strong> Curated Digital Archive</li>
-            <li>2️⃣ <strong>Solar System Explorer:</strong> Interactive Orbital Simulation</li>
+            <motion.li whileHover={{ x: 10, color: "#00b4ff" }} transition={{ type: "spring", stiffness: 300 }}>1️⃣ <strong>The Top 100 Novels:</strong> Curated Digital Archive</motion.li>
+            <motion.li whileHover={{ x: 10, color: "#00b4ff" }} transition={{ type: "spring", stiffness: 300 }}>2️⃣ <strong>Solar System Explorer:</strong> Interactive Orbital Simulation</motion.li>
           </ul>
         </motion.div>
 
         {/* Skills */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
           style={{ marginTop: 40 }}
         >
           <h4 style={{ fontSize: 20, color: "#00b4ff", marginBottom: 12 }}>⚙️ Skills</h4>
@@ -177,13 +186,14 @@ export default function Resume() {
             ].map((skill) => (
               <motion.span
                 key={skill}
-                whileHover={{ scale: 1.1, backgroundColor: "rgba(0,180,255,0.3)" }}
+                whileHover={{ scale: 1.15, backgroundColor: "rgba(0,180,255,0.3)", boxShadow: "0 5px 15px rgba(0, 180, 255, 0.4)" }}
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   padding: "6px 12px",
                   borderRadius: 8,
                   fontSize: 13,
                   color: "#ccc",
+                  cursor: "default"
                 }}
               >
                 {skill}
@@ -192,9 +202,10 @@ export default function Resume() {
           </div>
         </motion.div>
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
           style={{
             display: "flex",
             justifyContent: "center",
@@ -213,7 +224,7 @@ export default function Resume() {
               href={site.link}
               target="_blank"
               rel="noreferrer"
-              whileHover={{ scale: 1.1, color: "#00b4ff" }}
+              whileHover={{ scale: 1.1, color: "#00b4ff", textShadow: "0 0 8px rgba(0, 180, 255, 0.8)" }}
               style={{
                 color: "#ccc",
                 textDecoration: "none",
@@ -228,14 +239,16 @@ export default function Resume() {
 
         {/* PDF Viewer */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
           style={{
             marginTop: 50,
             borderRadius: 12,
             overflow: "hidden",
             border: "1px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.5)"
           }}
         >
           <iframe
@@ -251,25 +264,27 @@ export default function Resume() {
         </motion.div>
 
         {/* Download Button */}
-        <motion.a
-          href="LOKANATH MEHER (2).pdf"
-          download="Lokanath_Meher_Resume.pdf"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          style={{
-            display: "inline-block",
-            marginTop: 20,
-            background: "#00b4ff",
-            color: "#fff",
-            padding: "10px 22px",
-            borderRadius: 8,
-            textDecoration: "none",
-            fontWeight: 500,
-            letterSpacing: 0.3,
-          }}
-        >
-          ⬇️ Download Resume
-        </motion.a>
+        <div style={{ textAlign: "center", marginTop: 30 }}>
+          <motion.a
+            href="LOKANATH MEHER (2).pdf"
+            download="Lokanath_Meher_Resume.pdf"
+            whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(0, 180, 255, 0.5)" }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              display: "inline-block",
+              background: "linear-gradient(135deg, #00b4ff, #0077ff)",
+              color: "#fff",
+              padding: "12px 28px",
+              borderRadius: 8,
+              textDecoration: "none",
+              fontWeight: 600,
+              letterSpacing: 0.5,
+              fontSize: 16
+            }}
+          >
+            ⬇️ Download Resume
+          </motion.a>
+        </div>
 
 
       </motion.div>

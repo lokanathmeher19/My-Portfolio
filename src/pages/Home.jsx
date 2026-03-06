@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <section className="home-section">
-      
+
       {/* Typing Effect Styles */}
       <style>
         {`
@@ -29,9 +29,10 @@ export default function Home() {
       <div className="home-top">
         {/* Left: Glowing Photo */}
         <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
+          initial={{ opacity: 0, x: -60, scale: 0.9 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 1, type: "spring", stiffness: 100 }}
+          whileHover={{ scale: 1.05, rotateZ: [0, -2, 2, -2, 0], transition: { duration: 0.5 } }}
           className="photo-container"
         >
           <motion.div
@@ -40,7 +41,7 @@ export default function Home() {
             className="photo-ring"
           />
           <motion.div
-            animate={{ y: [0, -8, 0] }}
+            animate={{ y: [0, -12, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             className="photo-frame"
           >
@@ -75,13 +76,18 @@ export default function Home() {
 
           {/* Typing Animated Text */}
           <p className="typing-effect">
-               Software Developer | Cybersecurity Analyst | Tech Explorer
+            Software Developer | Cybersecurity Analyst | Tech Explorer
           </p>
 
           {/* Profession Tags */}
           <motion.div className="profession-tags">
             {PROFESSIONS.map((role, i) => (
-              <motion.div key={i} whileHover={{ scale: 1.05, background: 'linear-gradient(90deg,var(--accent),var(--accent-2))' }} transition={{ type: 'spring', stiffness: 200 }} className="profession-tag">
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.1, background: 'linear-gradient(90deg,var(--accent),var(--accent-2))', color: '#000', boxShadow: "0 10px 20px rgba(0, 255, 157, 0.4)" }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="profession-tag"
+              >
                 {role}
               </motion.div>
             ))}
@@ -90,7 +96,12 @@ export default function Home() {
           {/* Info Cards */}
           <motion.div className="info-cards">
             {INFO_CARDS.map((info, i) => (
-              <motion.div key={i} whileHover={{ y: -4, scale: 1.05 }} transition={{ type: 'spring', stiffness: 250 }} className="info-card">
+              <motion.div
+                key={i}
+                whileHover={{ y: -8, scale: 1.05, boxShadow: "0 15px 30px rgba(0, 255, 157, 0.2)" }}
+                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                className="info-card"
+              >
                 <strong>{info.label}</strong>
                 <p>{info.value}</p>
               </motion.div>

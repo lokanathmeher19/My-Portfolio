@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaUniversity, FaSchool, FaGraduationCap } from "react-icons/fa";
+import TerminalConsole from "../components/TerminalConsole";
 
 
 const AboutMe = () => {
@@ -19,7 +20,7 @@ const AboutMe = () => {
         padding: "3rem 1rem",
       }}
     >
-      
+
       {/* --- About Me + Education Section --- */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -239,6 +240,10 @@ const AboutMe = () => {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* --- Hacker Terminal Easter Egg --- */}
+        <TerminalConsole />
+
       </motion.div>
     </div>
   );

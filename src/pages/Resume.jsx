@@ -94,7 +94,7 @@ export default function Resume() {
           </motion.div>
         </motion.div>
 
-        {/* Education Section with Border Box */}
+        {/* Education Section with Timeline */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -104,44 +104,67 @@ export default function Resume() {
             marginTop: 40,
             border: "1px solid rgba(255,255,255,0.1)",
             borderRadius: 12,
-            padding: "20px 24px",
+            padding: "30px 24px",
             background: "rgba(255,255,255,0.03)",
             transition: "all 0.3s ease",
           }}
           whileHover={{ boxShadow: "0 10px 30px rgba(0, 180, 255, 0.15)", borderColor: "rgba(0, 180, 255, 0.4)", transform: "translateY(-5px)" }}
         >
-          <h4 style={{ fontSize: 20, color: "#00b4ff", marginBottom: 12 }}>
-            🎓 Education
+          <h4 style={{ fontSize: 22, color: "#00b4ff", marginBottom: 25 }}>
+            🎓 Education Journey
           </h4>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, lineHeight: 1.8 }}>
-            <li>
-              <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-                <strong>B.Tech in Computer Science & Engineering</strong> —
-                <img src="giet-logo.jpg" alt="GIET" style={{ width: "18px", height: "18px", objectFit: "contain", borderRadius: "50%" }} />
-                GIET, GHANGAPTNA, BBSR
-              </div>
-              (2024–2028) <br />
-              <span style={{ color: "#aaa" }}>Current Semester: 3rd</span>
-            </li>
-            <li style={{ marginTop: 8 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-                <strong>12th Board — </strong>
-                <img src="dadhibaman-logo.jpg" alt="Dadhibaman College" style={{ width: "18px", height: "18px", objectFit: "contain", borderRadius: "50%" }} />
-                DADHIBAMAN HIGHER SECONDARY SCHOOL, BHATLI
-              </div>
-              (Bargarh, CHSE Board, 2024) <br />
-              <span style={{ color: "#aaa" }}>Percentage: 63%</span>
-            </li>
-            <li style={{ marginTop: 8 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-                <strong>10th Board — </strong>
-                <img src="saiier-logo.jpg" alt="S.A.I.I.E&R" style={{ width: "18px", height: "18px", objectFit: "contain", borderRadius: "50%" }} />
-                S.A.I.I.E&R, BARGARH
-              </div>
-              (BSE Odisha Board, 2022) <br />
-              <span style={{ color: "#aaa" }}>Percentage: 78%</span>
-            </li>
-          </ul>
+          <div style={{ position: "relative", paddingLeft: 30 }}>
+            {/* Vertical Line */}
+            <div style={{ position: "absolute", left: 8, top: 0, bottom: 0, width: 2, background: "rgba(0, 180, 255, 0.2)" }} />
+
+            {[
+              {
+                title: "B.Tech in Computer Science & Engineering",
+                school: "Gandhi Institued of Excellent Technocrats (GIET)",
+                logo: "giet-logo.jpg",
+                year: "2024–2028",
+                desc: "3rd Sem | GPU Accelerated Processing, ML & Network Security focus."
+              },
+              {
+                title: "12th Board (CHSE)",
+                school: "Dadhibaman Higher Secondary School (DBHS)",
+                logo: "dadhibaman-logo.jpg",
+                year: "2024",
+                desc: "63% | Advanced Mathematics & Physics."
+              },
+              {
+                title: "10th Board (BSE Odisha)",
+                school: "S.A.I.I.E&R, Bargarh",
+                logo: "saiier-logo.jpg",
+                year: "2022",
+                desc: "78% | General Science Framework."
+              }
+            ].map((edu, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                whileHover={{ x: 5 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * idx }}
+                style={{ position: "relative", marginBottom: idx === 2 ? 0 : 35 }}
+              >
+                {/* Timeline Dot */}
+                <div style={{
+                  position: "absolute", left: -31, top: 6, width: 18, height: 18,
+                  borderRadius: "50%", background: "#0b0b0b", border: "3px solid #00b4ff",
+                  boxShadow: "0 0 15px #00b4ff"
+                }} />
+
+                <h5 style={{ fontSize: 18, color: "#fff", margin: "0 0 6px 0", letterSpacing: 0.5 }}>{edu.title}</h5>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#ccc", fontSize: 14 }}>
+                  <img src={edu.logo} alt="logo" style={{ width: 18, height: 18, borderRadius: "50%", objectFit: "contain", background: "white" }} />
+                  {edu.school} <span style={{ color: "#00b4ff", fontWeight: "bold" }}>• {edu.year}</span>
+                </div>
+                <p style={{ margin: "8px 0 0 0", color: "#888", fontSize: 14 }}>{edu.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Projects */}

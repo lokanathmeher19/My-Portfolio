@@ -5,7 +5,6 @@ import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Preloader from './components/Preloader'
 import ParticlesBackground from './components/ParticlesBackground'
-import CustomCursor from './components/CustomCursor'
 
 // Lazy-loaded routes for massive efficiency gains
 const Home = lazy(() => import('./pages/Home'))
@@ -31,16 +30,15 @@ export default function App() {
   });
 
   useEffect(() => {
-    // Show preloader for 2.8 seconds to allow the awesome cyber animation to play
+    // Fast preloader for HR convenience
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2800);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="app">
-      <CustomCursor />
       {/* Neon Scroll Progress Bar */}
       <motion.div
         style={{

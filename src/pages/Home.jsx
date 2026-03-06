@@ -27,30 +27,45 @@ export default function Home() {
 
       {/* Top Section: Photo + Info */}
       <div className="home-top">
-        {/* Left: Glowing Photo */}
+        {/* Left: Professional Photo Presentation */}
         <motion.div
-          initial={{ opacity: 0, x: -60, scale: 0.9 }}
+          initial={{ opacity: 0, x: -40, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 1, type: "spring", stiffness: 100 }}
-          whileHover={{ scale: 1.05, rotateZ: [0, -2, 2, -2, 0], transition: { duration: 0.5 } }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="photo-container"
+          style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
         >
+          {/* Subtle static background ring instead of rotating neon */}
+          <div style={{
+            position: 'absolute',
+            width: '105%',
+            height: '105%',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            zIndex: 0
+          }} />
+
           <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-            className="photo-ring"
-          />
-          <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="photo-frame"
+            whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}
+            transition={{ duration: 0.3 }}
+            style={{
+              zIndex: 1,
+              borderRadius: '50%',
+              overflow: 'hidden',
+              background: '#111',
+              border: '2px solid rgba(255,255,255,0.1)'
+            }}
           >
-            <motion.img
+            <img
               src={photo}
               alt="Lokanath Meher"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1 }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
+              }}
               className="profile-photo"
             />
           </motion.div>
@@ -84,9 +99,20 @@ export default function Home() {
             {PROFESSIONS.map((role, i) => (
               <motion.div
                 key={i}
-                whileHover={{ scale: 1.1, background: 'linear-gradient(90deg,var(--accent),var(--accent-2))', color: '#000', boxShadow: "0 10px 20px rgba(0, 255, 157, 0.4)" }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="profession-tag"
+                whileHover={{ y: -2, background: 'rgba(255,255,255,0.1)' }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  fontSize: '13px',
+                  color: '#ccc',
+                  cursor: 'default',
+                  display: 'inline-block',
+                  marginRight: '8px',
+                  marginBottom: '8px'
+                }}
               >
                 {role}
               </motion.div>
@@ -98,12 +124,20 @@ export default function Home() {
             {INFO_CARDS.map((info, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -8, scale: 1.05, boxShadow: "0 15px 30px rgba(0, 255, 157, 0.2)" }}
-                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                whileHover={{ y: -4, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
+                transition={{ duration: 0.2 }}
                 className="info-card"
+                style={{
+                  background: 'rgba(20,20,20,0.6)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  flex: '1',
+                  minWidth: '140px'
+                }}
               >
-                <strong>{info.label}</strong>
-                <p>{info.value}</p>
+                <strong style={{ display: 'block', color: '#888', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>{info.label}</strong>
+                <p style={{ margin: 0, color: '#eee', fontSize: '14px', fontWeight: '500' }}>{info.value}</p>
               </motion.div>
             ))}
           </motion.div>

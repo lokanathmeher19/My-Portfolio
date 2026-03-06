@@ -30,10 +30,10 @@ export default function App() {
   });
 
   useEffect(() => {
-    // Fast preloader for HR convenience
+    // Show preloader for 2.8 seconds to allow the awesome cyber animation to play
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 2800);
     return () => clearTimeout(timer);
   }, []);
 

@@ -116,7 +116,7 @@ export default function Skills() {
 
   return (
     <section className="skills-container" id="skills" style={{ position: "relative", overflow: "hidden" }}>
-      
+
       {/* Header */}
       <motion.div
         className="skills-header"

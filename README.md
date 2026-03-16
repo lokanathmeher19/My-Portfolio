@@ -5,6 +5,10 @@ It showcases my work, projects, skills, and journey as a developer passionate ab
 
 
 🖼️ **Screenshots**
+<<<<<<< HEAD
+=======
+
+>>>>>>> 36cf44e46b44ed2d6598d3d62d677091c28b77a1
 ![Lokanath Meher - Photo](src/assets/photo.jpg)
 ---
 

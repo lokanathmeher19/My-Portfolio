@@ -1,249 +1,127 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import {
-  Binary, Brain, Layers, Users, Puzzle, Palette, RefreshCcw, MessageCircle
+  Binary, Brain, Layers, Code, Database, Globe, Cpu, Hexagon
 } from "lucide-react";
-import "../styles/Skills.css";
 
-const SKILLS = [
-  { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  { name: "C", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
-  { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-  { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-  { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-  { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-  { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-];
-
-const ROWS = [
-  [
-    {
-      title: "Programming Languages",
-      items: [
-        { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-        { name: "C", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
-        { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
-        { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" }
-      ]
-    },
-    {
-      title: "Web Technologies",
-      items: [
-        { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-        { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" }
-      ]
-    },
-    {
-      title: "Databases & Tools",
-      items: [
-        { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-        { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" }
-      ]
-    },
-  ],
-  [
-    {
-      title: "Core Concepts",
-      items: [
-        { name: "Data Structures & Algorithms", icon: Binary },
-        { name: "Machine Learning", icon: Brain },
-        { name: "Deep Learning", icon: Layers },
-      ],
-    },
-    {
-      title: "Soft Skills",
-      items: [
-        { name: "Teamwork", icon: Users },
-        { name: "Problem Solving", icon: Puzzle },
-        { name: "Creativity", icon: Palette },
-        { name: "Adaptability", icon: RefreshCcw },
-        { name: "Communication", icon: MessageCircle },
-      ],
-    },
-  ],
+const SKILL_CATEGORIES = [
+  {
+    title: "Engineering",
+    icon: <Code size={24} />,
+    items: [
+      { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+      { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+      { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+      { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+    ]
+  },
+  {
+    title: "Intelligence",
+    icon: <Brain size={24} />,
+    items: [
+      { name: "Machine Learning", icon: <Brain size={18} /> },
+      { name: "Deep Learning", icon: <Layers size={18} /> },
+      { name: "Computer Vision", icon: <Hexagon size={18} /> },
+      { name: "Data Structures", icon: <Binary size={18} /> },
+    ]
+  },
+  {
+    title: "Infrastructure & Full-Stack",
+    icon: <Database size={24} />,
+    items: [
+      { name: "React.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-line.svg" },
+      { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+      { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+      { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+      { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" },
+      { name: "GraphQL", icon: <Hexagon size={18} /> },
+      { name: "Socket.io", icon: <Globe size={18} /> },
+    ]
+  }
 ];
 
 export default function Skills() {
-  const stageRef = useRef();
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    const circles = Array.from(stage.querySelectorAll(".skill-circle"));
-    const rect = stage.getBoundingClientRect();
-    const placed = [];
-
-    const isOverlapping = (x, y, size) =>
-      placed.some((p) => {
-        const dx = p.x - x;
-        const dy = p.y - y;
-        return Math.sqrt(dx * dx + dy * dy) < p.size / 2 + size / 2 + 40;
-      });
-
-    circles.forEach((circle) => {
-      const size = circle.offsetWidth;
-      let x, y, tries = 0;
-      do {
-        x = Math.random() * (rect.width - size - 20);
-        y = Math.random() * (rect.height - size - 20);
-        tries++;
-      } while (isOverlapping(x, y, size) && tries < 150);
-
-      placed.push({ x, y, size });
-      circle.style.left = `${x}px`;
-      circle.style.top = `${y}px`;
-
-      const dx = (Math.random() - 0.5) * 100;
-      const dy = (Math.random() - 0.5) * 100;
-      circle.animate(
-        [{ transform: "translate(0, 0)" }, { transform: `translate(${dx}px, ${dy}px)` }],
-        {
-          duration: 5000 + Math.random() * 2000,
-          direction: "alternate",
-          iterations: Infinity,
-          easing: "ease-in-out",
-        }
-      );
-    });
-  }, []);
-
   return (
-    <section className="skills-container" id="skills" style={{ position: "relative", overflow: "hidden" }}>
-
-      {/* Header */}
-      <motion.div
-        className="skills-header"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <h2 className="text-5xl text-cyan-400 font-semibold mb-3">My Skills</h2>
-        <div className="w-28 h-[2px] bg-cyan-400 mx-auto mb-6"></div>
-        <p className="text-gray-400 text-lg max-w-xl mx-auto">
-          ✨ Technical expertise blended with creativity — explore my core competencies below.
-        </p>
-      </motion.div>
-
-      {/* Floating Orbs with page-load + hover highlight animation */}
-      <motion.div
-        className="skills-stage relative mx-auto mb-20"
-        ref={stageRef}
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        style={{
-          width: "100%",
-          height: "550px",
-          borderRadius: "25px",
-          background: "radial-gradient(circle at 50% 50%, #0a0a0a, #101010)",
-          overflow: "hidden",
-          boxShadow: "inset 0 0 60px rgba(0,255,255,0.07)",
-          position: "relative",
-        }}
-      >
-        {SKILLS.map((s, i) => (
-          <motion.div
-            key={s.name}
-            className="skill-circle"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: i * 0.08, duration: 0.6, ease: "easeOut" }}
-            whileHover={{
-              scale: 1.3,
-              boxShadow: "0 0 35px 10px rgba(0,255,255,0.6)",
-              background: "rgba(0,255,255,0.12)",
-            }}
-            style={{
-              width: "110px",
-              height: "110px",
-              borderRadius: "50%",
-              position: "absolute",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              background: "rgba(0,255,255,0.06)",
-              border: "1px solid rgba(0,255,255,0.25)",
-              backdropFilter: "blur(8px)",
-              cursor: "pointer",
-              transition: "box-shadow 0.4s ease, background 0.4s ease",
-            }}
+    <div className="content-section">
+      <div className="container" style={{ paddingTop: '80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '100px' }}>
+          <motion.h4 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{ color: 'var(--accent-secondary)', textTransform: 'uppercase', letterSpacing: '6px', fontSize: '0.8rem', fontWeight: 800, marginBottom: '20px' }}
           >
-            <motion.img
-              src={s.logo}
-              alt={s.name}
-              style={{
-                width: "50px",
-                height: "50px",
-                objectFit: "contain",
-                filter: "drop-shadow(0 0 8px rgba(0,255,255,0.4)) brightness(1.2)",
-                marginBottom: "5px",
-              }}
-              whileHover={{
-                filter: "drop-shadow(0 0 12px rgba(0,255,255,0.9)) brightness(1.6)",
-                rotate: [0, 6, -6, 0],
-                transition: { duration: 0.5 },
-              }}
-            />
-            <span
-              style={{
-                color: "rgba(180,255,255,0.9)",
-                fontSize: "13px",
-                fontWeight: 500,
-                letterSpacing: "0.3px",
-              }}
-            >
-              {s.name}
-            </span>
-          </motion.div>
-        ))}
-      </motion.div>
+            Capabilities
+          </motion.h4>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="title-gradient"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontFamily: 'var(--font-heading)', fontWeight: 800 }}
+          >
+            The Machine Inside
+          </motion.h2>
+        </div>
 
-      {/* Skills Table (Text Section) */}
-      <div className="skills-table">
-        {ROWS.map((row, rowIndex) => (
-          <div key={rowIndex} className="skills-row">
-            {row.map((col, colIndex) => (
-              <motion.div
-                key={col.title}
-                className="skill-box"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.05 }}
-                transition={{
-                  duration: 0.6,
-                  delay: (rowIndex + colIndex) * 0.1,
-                }}
-              >
-                <h3>{col.title}</h3>
-                <ul>
-                  {col.items.map((item, i) => (
-                    <motion.li
-                      key={i}
-                      whileHover={{ x: 6, color: "#00ffc8" }}
-                      style={{ display: "flex", alignItems: "center", gap: "10px" }}
-                    >
-                      {typeof item.icon === 'string' ? (
-                        <img src={item.icon} alt={item.name} style={{ width: "20px", height: "20px", objectFit: "contain" }} />
-                      ) : (
-                        <item.icon size={18} color="#00ffc8" />
-                      )}
-                      {item.name}
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '40px' }}>
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <motion.div 
+              key={cat.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-panel"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '40px' }}>
+                <div style={{ 
+                  width: '56px', height: '56px', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', 
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)',
+                  border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 10px 20px rgba(0,0,0,0.2)'
+                }}>
+                  {cat.icon}
+                </div>
+                <h3 style={{ fontSize: '1.75rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.02em' }}>{cat.title}</h3>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+                {cat.items.map((skill) => (
+                  <motion.div 
+                    key={skill.name}
+                    whileHover={{ scale: 1.05, background: 'rgba(255,255,255,0.08)' }}
+                    style={{ 
+                      padding: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '16px', 
+                      fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '12px',
+                      border: '1px solid rgba(255,255,255,0.05)', transition: 'all 0.3s ease',
+                      cursor: 'default'
+                    }}
+                  >
+                    {skill.logo ? (
+                      <img src={skill.logo} alt={skill.name} style={{ width: '22px', height: '22px', filter: 'grayscale(0.5)' }} />
+                    ) : <div style={{ color: 'var(--accent-secondary)' }}>{skill.icon}</div>}
+                    <span style={{ fontWeight: 500, color: 'var(--text-secondary)' }}>{skill.name}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Floating Decorative Elements */}
+        <div style={{ marginTop: '100px', textAlign: 'center', opacity: 0.4 }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', color: 'var(--text-secondary)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Cpu size={16} /> Hardware Integration</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Globe size={16} /> Scalable Systems</div>
           </div>
-        ))}
+        </div>
       </div>
-    </section>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 500px) {
+          .glass-panel { padding: 24px !important; }
+          div[style*="grid-template-columns: repeat(2, 1fr)"] { grid-template-columns: 1fr !important; }
+        }
+      `}} />
+    </div>
   );
 }

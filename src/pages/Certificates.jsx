@@ -21,6 +21,10 @@ import codec_python_achievement from "../assets/certs/codec_python_achievement.j
 import codec_python_internship from "../assets/certs/codec_python_internship.jpg";
 import simplilearn_software_dev from "../assets/certs/simplilearn_software_dev.jpg";
 import deloitte_data_analytics from "../assets/certs/deloitte_data_analytics.png";
+import workshop from "../assets/certs/workshop.png";
+import deloatte_misspelled from "../assets/certs/Deloatte.jpg";
+import cyber_awareness from "../assets/certs/Introduction to Cybersecurity Awareness_page-0001.jpg";
+import nxtwave_alt from "../assets/certs/Nxtwave.jpeg";
 
 // ✅ Certificates data (added URLs for View button)
 const CERTS = {
@@ -45,6 +49,13 @@ const CERTS = {
       date: "2025",
       img: nxtwave_static,
       link: nxtwave_static,
+    },
+    {
+      title: "Mastery Certification",
+      org: "NxtWave",
+      date: "2025",
+      img: nxtwave_alt,
+      link: nxtwave_alt,
     },
   ],
   coursera: [
@@ -75,6 +86,13 @@ const CERTS = {
       date: "2025",
       img: coursera_gemini,
       link: coursera_gemini,
+    },
+    {
+      title: "Cybersecurity Awareness",
+      org: "Cisco",
+      date: "2025",
+      img: cyber_awareness,
+      link: cyber_awareness,
     },
   ],
   giet: [
@@ -150,10 +168,27 @@ const CERTS = {
       img: deloitte_data_analytics,
       link: deloitte_data_analytics,
     },
+    {
+      title: "Technical Workshop Performance",
+      org: "Skill Development",
+      date: "2025",
+      img: workshop,
+      link: workshop,
+    },
+    {
+      title: "Strategic Global Simulation",
+      org: "Deloitte",
+      date: "2025",
+      img: deloatte_misspelled,
+      link: deloatte_misspelled,
+    },
   ],
 };
 
+import useScrollNavigation from '../hooks/useScrollNavigation'
+
 export default function Certificates() {
+  useScrollNavigation('/blog', '/skills')
   const [tab, setTab] = useState("nxtwave");
   const [selectedCert, setSelectedCert] = useState(null);
 

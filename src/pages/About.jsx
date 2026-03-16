@@ -1,247 +1,110 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaUniversity, FaSchool, FaGraduationCap } from "react-icons/fa";
+import { GraduationCap, Award, MapPin } from "lucide-react";
 
+export default function About() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  }
 
-const AboutMe = () => {
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  }
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        overflow: "hidden",
-        color: "white",
-        padding: "3rem 1rem",
-      }}
-    >
-
-      {/* --- About Me + Education Section --- */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        style={{
-          width: "100%",
-          maxWidth: "1100px",
-          textAlign: "left",
-          marginTop: "1rem",
-          lineHeight: 1.8,
-          background: "rgba(255,255,255,0.04)",
-          padding: "3rem 3.5rem",
-          borderRadius: "18px",
-          boxShadow: "0 0 25px rgba(0,255,200,0.08)",
-          backdropFilter: "blur(10px)",
-        }}
-      >
-        {/* --- Header --- */}
-        <h2
-          style={{
-            fontSize: "1.9rem",
-            marginBottom: "1.2rem",
-            background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
-          }}
+    <div className="content-section">
+      <div className="container" style={{ maxWidth: '1100px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
         >
-          About Me
-        </h2>
-
-        {/* --- Description --- */}
-        <p
-          style={{
-            fontSize: "1.1rem",
-            color: "rgba(255,255,255,0.85)",
-            marginBottom: "1rem",
-          }}
-        >
-          Hi, I’m <strong>Lokanath Meher</strong> — an aspiring{" "}
-          <strong>Cyber Analyst</strong> and{" "}
-          <strong>Machine Learning enthusiast</strong> who loves turning ideas
-          into intelligent systems. I’m deeply fascinated by how data and
-          algorithms can shape the future of healthcare, automation, and
-          creativity in technology.
-        </p>
-
-        <p style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.8)" }}>
-          Beyond code, I enjoy exploring design, experimenting with motion and
-          interaction, and finding ways to blend{" "}
-          <strong>artistic creativity</strong> with{" "}
-          <strong>technical precision</strong>. My goal is to build solutions
-          that not only perform — but also inspire.
-        </p>
-
-        <p>
-          2nd-year B.Tech Engineering student with hands-on experience in AI & ML Projects. Proficient in Python, and data preprocessing. Seeking internship opportunities to apply skills and contribute to impactful AI solutions.
-        </p>
-
-        {/* --- Education Section --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          style={{ marginTop: "3rem" }}
-        >
-          <h3
-            style={{
-              fontSize: "1.6rem",
-              marginBottom: "1.5rem",
-              background:
-                "linear-gradient(90deg, var(--accent), var(--accent-2))",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Education
-          </h3>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.2rem",
-            }}
-          >
-            {/* --- Education Card 1 --- */}
-            <motion.div
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 0 25px rgba(0,255,200,0.15)",
-              }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                borderRadius: "14px",
-                padding: "1.5rem 2rem",
-                border: "1px solid rgba(255,255,255,0.08)",
-                boxShadow: "0 0 15px rgba(0,255,200,0.05)",
-                display: "flex",
-                alignItems: "center",
-                gap: "1.2rem",
-              }}
-            >
-              <FaUniversity size={40} color="var(--accent)" />
-              <div>
-                <h4
-                  style={{
-                    color: "var(--accent)",
-                    marginBottom: "0.4rem",
-                    fontSize: "1.25rem",
-                  }}
-                >
-                  B.Tech in Computer Science & Engineering
-                </h4>
-                <p
-                  style={{
-                    color: "rgba(255,255,255,0.85)",
-                    marginBottom: "0.2rem",
-                  }}
-                >
-                  <strong>Gandhi Institued of Excellent Technocrats (GIET)</strong> — Ghangapatna, Bhubneswar
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 500px), 1fr))', gap: '80px', alignItems: 'flex-start' }}>
+            {/* The Narrative */}
+            <div>
+              <motion.h4 
+                variants={itemVariants}
+                style={{ color: 'var(--accent-secondary)', textTransform: 'uppercase', letterSpacing: '6px', fontSize: '0.8rem', fontWeight: 800, marginBottom: '20px' }}
+              >
+                The Manifesto
+              </motion.h4>
+              <motion.h2 
+                variants={itemVariants}
+                className="title-gradient"
+                style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontFamily: 'var(--font-heading)', marginBottom: '40px', fontWeight: 800 }}
+              >
+                Driven by Security,<br />Defined by Code.
+              </motion.h2>
+              
+              <motion.div variants={itemVariants} style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                <p style={{ fontSize: '1.2rem', color: '#fff', lineHeight: 1.7, opacity: 0.9 }}>
+                  I’m <span style={{ color: 'var(--accent-primary)', fontWeight: 700 }}>Lokanath Meher</span>. Currently an undergraduate pushing the boundaries of what's possible in the intersection of Software Design and Cyber Espionage Defense.
                 </p>
-                <p style={{ color: "rgba(255,255,255,0.7)" }}>
-                  2nd Year (Pursuing) | GPA: 8.0
+                <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+                  My methodology leverages the mathematical precision of the MERN stack with the strategic foresight of an security analyst. I don't just build applications; I engineer ecosystems that are secure by design and beautiful by intent.
                 </p>
-                <p style={{ color: "rgba(255,255,255,0.7)" }}>2024 – 2028</p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
 
-            {/* --- Education Card 2 --- */}
-            <motion.div
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 0 25px rgba(0,255,200,0.15)",
-              }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                borderRadius: "14px",
-                padding: "1.5rem 2rem",
-                border: "1px solid rgba(255,255,255,0.08)",
-                boxShadow: "0 0 15px rgba(0,255,200,0.05)",
-                display: "flex",
-                alignItems: "center",
-                gap: "1.2rem",
-              }}
-            >
-              <FaGraduationCap size={38} color="var(--accent)" />
-              <div>
-                <h4
-                  style={{
-                    color: "var(--accent)",
-                    marginBottom: "0.4rem",
-                    fontSize: "1.25rem",
-                  }}
-                >
-                  Higher Secondary Education (12th Grade)
-                </h4>
-                <p
-                  style={{
-                    color: "rgba(255,255,255,0.85)",
-                    marginBottom: "0.2rem",
-                  }}
-                >
-                  <strong>Dadhibaman Higher Secondary School (DBHS)</strong> — Bhatli, Bargarh
-                </p>
-                <p style={{ color: "rgba(255,255,255,0.7)" }}>
-                  CHSE Board | Percentage: 63%
-                </p>
-                <p style={{ color: "rgba(255,255,255,0.7)" }}>Completed in 2024</p>
-              </div>
-            </motion.div>
-
-            {/* --- Education Card 3 --- */}
-            <motion.div
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 0 25px rgba(0,255,200,0.15)",
-              }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                borderRadius: "14px",
-                padding: "1.5rem 2rem",
-                border: "1px solid rgba(255,255,255,0.08)",
-                boxShadow: "0 0 15px rgba(0,255,200,0.05)",
-                display: "flex",
-                alignItems: "center",
-                gap: "1.2rem",
-              }}
-            >
-              <FaSchool size={36} color="var(--accent)" />
-              <div>
-                <h4
-                  style={{
-                    color: "var(--accent)",
-                    marginBottom: "0.4rem",
-                    fontSize: "1.25rem",
-                  }}
-                >
-                  Secondary Education (10th Grade)
-                </h4>
-                <p
-                  style={{
-                    color: "rgba(255,255,255,0.85)",
-                    marginBottom: "0.2rem",
-                  }}
-                >
-                  <strong>Sri Aurobindo Integral Education and Research Center</strong> — Bargarh
-                </p>
-                <p style={{ color: "rgba(255,255,255,0.7)" }}>
-                  BSE Board | Percentage: 78%
-                </p>
-                <p style={{ color: "rgba(255,255,255,0.7)" }}>Completed in 2022</p>
-              </div>
-            </motion.div>
+            {/* Academic History */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+               <motion.div variants={itemVariants} style={{ marginBottom: '16px' }}>
+                  <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.02em' }}>Academic Trajectory</h3>
+               </motion.div>
+               
+               <EducationCard 
+                icon={<GraduationCap size={24} />}
+                title="B.Tech Computer Science"
+                institution="Gandhi Institute of Excellent Technocrats"
+                location="Bhubaneswar"
+                period="2024 – 2028"
+                detail="Architecture & Intelligence focus"
+              />
+              <EducationCard 
+                icon={<Award size={24} />}
+                title="Higher Secondary"
+                institution="Dadhibaman Higher School"
+                location="Bhatli"
+                period="2022 – 2024"
+                detail="CHSE | Strategic Sciences"
+              />
+            </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default AboutMe;
+function EducationCard({ icon, title, institution, location, period, detail }) {
+  return (
+    <motion.div 
+      whileHover={{ scale: 1.02 }}
+      className="glass-panel" 
+      style={{ display: 'flex', gap: '24px', padding: '32px', alignItems: 'center', background: 'rgba(255,255,255,0.01)' }}
+    >
+      <div style={{ 
+        width: '56px', height: '56px', background: 'rgba(255,255,255,0.03)', borderRadius: '16px', 
+        display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-secondary)',
+        border: '1px solid rgba(255,255,255,0.08)', flexShrink: 0
+      }}>
+        {icon}
+      </div>
+      <div style={{ flex: 1 }}>
+        <h4 style={{ fontSize: '1.15rem', marginBottom: '4px', fontFamily: 'var(--font-heading)', color: '#fff' }}>{title}</h4>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+           <span style={{ fontWeight: 600, color: '#fff' }}>{institution}</span>
+           <div style={{ width: '4px', height: '4px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}></div>
+           <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><MapPin size={12} /> {location}</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+           <span style={{ color: 'var(--accent-primary)', fontSize: '0.85rem', fontWeight: 700 }}>{period}</span>
+           <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', opacity: 0.6 }}>{detail}</span>
+        </div>
+      </div>
+    </motion.div>
+  )
+}

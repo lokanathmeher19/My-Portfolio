@@ -38,7 +38,7 @@ export const PROJECTS = [
         btnText: 'Explore Universe'
     },
     {
-        title: 'AI Image Generator',
+        title: 'TruthGuard_AI',
         desc: 'A high-performance AI integration for generating artistic visuals from text prompts.',
         category: 'AI',
         tag: 'ARTIFICIAL INTELLIGENCE',

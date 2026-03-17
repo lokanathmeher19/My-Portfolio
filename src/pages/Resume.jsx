@@ -16,11 +16,26 @@ export default function Resume() {
         
         <div style={{ marginBottom: '80px' }}>
           <span className="badge">Technical Case Study</span>
-          <h1 className="hero-title" style={{ fontSize: '3.5rem' }}>Curriculum Vitae</h1>
-          <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', color: 'var(--text-secondary)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Mail size={18} /> meherlokanath314@gmail.com</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><Phone size={18} /> +91 8018677061</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MapPin size={18} /> Bhubaneswar, India</div>
+          <h1 className="hero-title" style={{ fontSize: '3.5rem', fontWeight: 900 }}>Curriculum Vitae</h1>
+          <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', color: 'var(--text-secondary)', fontWeight: 600 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Mail size={14} className="text-gradient" />
+              </div>
+              meherlokanath314@gmail.com
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Phone size={14} className="text-gradient" />
+              </div>
+              +91 9937164359
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MapPin size={14} className="text-gradient" />
+              </div>
+              Bhubaneswar, India
+            </div>
           </div>
         </div>
 

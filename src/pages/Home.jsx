@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   MapPin, 
   Cpu, 
@@ -39,7 +40,11 @@ import {
   Cloud,
   Trophy,
   Award,
-  Instagram
+  Instagram,
+  Lock,
+  GraduationCap,
+  Maximize2,
+  X
 } from 'lucide-react';
 
 const WhatsAppIcon = ({ size = 18 }) => (
@@ -88,6 +93,8 @@ import cert_workshop from '../assets/certs/workshop.png';
 import cert_deloatte_2 from '../assets/certs/Deloatte.jpg';
 import cert_cyber_awareness from '../assets/certs/Introduction to Cybersecurity Awareness_page-0001.jpg';
 import cert_nxtwave_alt from '../assets/certs/Nxtwave.jpeg';
+import cert_hackerrank from '../assets/certs/Hackerrank.png';
+import cert_ibm_bigdata from '../assets/certs/IBM BIg Data_page-0001.jpg';
 
 // --- Section Components ---
 
@@ -553,121 +560,151 @@ const Hero = () => {
 
 
 const ProjectCard = ({ p }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       style={{ 
-        padding: 0, 
-        overflow: 'hidden', 
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
+        perspective: '1200px',
         height: '100%',
-        background: 'rgba(2, 6, 23, 0.4)',
-        WebkitBackdropFilter: 'blur(24px)',
-        backdropFilter: 'blur(24px)',
-        borderRadius: '24px',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        transition: 'all 0.6s cubic-bezier(0.19, 1, 0.22, 1)',
-        boxShadow: `0 10px 40px -15px rgba(0, 0, 0, 0.8), 0 0 1px ${p.color}20`
-      }}
-      whileHover={{ 
-        y: -12, 
-        borderColor: p.color + 'aa',
-        background: 'rgba(2, 6, 23, 0.6)',
-        boxShadow: `0 40px 80px -20px rgba(0, 0, 0, 0.9), 0 0 30px ${p.color}15`
+        position: 'relative'
       }}
     >
-      {/* 🖼️ Cinematic Image Cover */}
-      <div style={{ height: '210px', overflow: 'hidden', position: 'relative' }}>
-        <motion.img 
-          src={p.img} 
-          alt={p.title} 
-          whileHover={{ scale: 1.15 }}
-          transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-        />
-        <div style={{ 
-          position: 'absolute', inset: 0, 
-          background: `linear-gradient(to bottom, transparent 0%, rgba(2, 6, 23, 0.2) 50%, rgba(2, 6, 23, 0.9) 100%)` 
-        }}></div>
-        
-        {/* 🏷️ Smart Category Badge */}
-        <div style={{ 
-          position: 'absolute', top: '16px', right: '16px',
-          padding: '6px 14px', borderRadius: '100px', fontSize: '0.55rem',
-          fontWeight: 900, background: p.color,
-          color: '#000', border: `1px solid rgba(255, 255, 255, 0.2)`, 
-          letterSpacing: '0.15em', textTransform: 'uppercase',
-          boxShadow: `0 10px 30px ${p.color}40`, zIndex: 10
-        }}>
-          {p.category}
-        </div>
-      </div>
+      <motion.div 
+        style={{ 
+          rotateX, 
+          rotateY,
+          transformStyle: 'preserve-3d',
+          height: '100%',
+          background: 'rgba(2, 6, 23, 0.45)',
+          WebkitBackdropFilter: 'blur(30px)',
+          backdropFilter: 'blur(30px)',
+          borderRadius: '20px',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          boxShadow: `0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 1px ${p.color}30`
+        }}
+      >
+        {/* 🔦 In-Card Spotlight */}
+        <motion.div style={{
+          position: 'absolute', inset: 0,
+          background: useTransform(
+            [mouseX, mouseY], 
+            ([mx, my]) => `radial-gradient(400px circle at ${(mx + 0.5) * 100}% ${(my + 0.5) * 100}%, ${p.color}15, transparent 60%)`
+          ),
+          pointerEvents: 'none', zIndex: 1
+        }} />
 
-      <div style={{ padding: '28px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ marginBottom: '16px' }}>
-          <h3 style={{ 
-            fontSize: '1.4rem', 
-            fontWeight: 800, 
-            color: '#fff', 
-            marginBottom: '10px', 
-            letterSpacing: '-0.03em', 
-            fontFamily: 'var(--font-heading)' 
-          }}>{p.title}</h3>
+        {/* 🖼️ Cinematic Image Cover */}
+        <div style={{ height: '180px', overflow: 'hidden', position: 'relative', transform: 'translateZ(20px)' }}>
+          <motion.img 
+            src={p.img} 
+            alt={p.title} 
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          />
+          <div style={{ 
+            position: 'absolute', inset: 0, 
+            background: `linear-gradient(to bottom, transparent 0%, rgba(2, 6, 23, 0.4) 100%)` 
+          }}></div>
           
-          <p style={{ 
-            color: 'var(--text-secondary)', 
-            fontSize: '0.85rem', 
-            lineHeight: 1.62,
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            height: '2.8rem',
-            opacity: 0.7,
-            fontWeight: 400
-          }}>{p.desc}</p>
+          <div style={{ 
+            position: 'absolute', top: '16px', right: '16px',
+            padding: '6px 12px', borderRadius: '100px', fontSize: '0.55rem',
+            fontWeight: 900, background: p.color,
+            color: '#000', border: `1px solid rgba(255, 255, 255, 0.2)`, 
+            letterSpacing: '0.1em', textTransform: 'uppercase',
+            boxShadow: `0 8px 20px ${p.color}40`, zIndex: 10
+          }}>
+            {p.category}
+          </div>
         </div>
 
-        {/* 🛠️ Specialized Tech Tags */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px' }}>
-          {p.tech?.map((t, i) => (
-            <span key={i} style={{ 
-              fontSize: '0.6rem', 
+        <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', transform: 'translateZ(35px)' }}>
+          <div style={{ marginBottom: '16px' }}>
+            <h3 style={{ 
+              fontSize: '1.25rem', 
+              fontWeight: 800, 
               color: '#fff', 
-              background: 'rgba(255, 255, 255, 0.05)',
-              padding: '4px 12px', 
-              borderRadius: '8px', 
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              fontWeight: 700,
-              letterSpacing: '0.02em'
-            }}>{t}</span>
-          ))}
-        </div>
+              marginBottom: '8px', 
+              letterSpacing: '-0.02em',
+              fontFamily: 'var(--font-heading)'
+            }}>{p.title}</h3>
+            
+            <p style={{ 
+              color: 'var(--text-secondary)', 
+              fontSize: '0.85rem', 
+              lineHeight: 1.6,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              height: '2.8rem',
+              opacity: 0.7
+            }}>{p.desc}</p>
+          </div>
 
-        {/* 🔗 Premium Action Matrix */}
-        <div style={{ marginTop: 'auto', display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '12px', paddingTop: '20px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-          <a href={p.live} target="_blank" rel="noreferrer" className="btn-premium" style={{ 
-            padding: '12px', fontSize: '0.75rem', background: '#fff', 
-            color: '#000', border: 'none', borderRadius: '12px', fontWeight: 900,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-            boxShadow: '0 10px 20px rgba(255,255,255,0.1)'
-          }}>
-            Live Demo <ArrowUpRight size={14} />
-          </a>
-          
-          <a href={p.github} target="_blank" rel="noreferrer" className="btn-premium" style={{ 
-            padding: '12px', fontSize: '0.75rem', background: 'rgba(255, 255, 255, 0.03)', 
-            color: '#fff', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', fontWeight: 700,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
-          }}>
-            Docs <Github size={14} />
-          </a>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
+            {p.tech?.map((t, idx) => (
+              <span key={idx} style={{ 
+                fontSize: '0.6rem', 
+                color: 'rgba(255,255,255,0.6)', 
+                background: 'rgba(255, 255, 255, 0.03)',
+                padding: '4px 10px', 
+                borderRadius: '6px', 
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                fontWeight: 600,
+                letterSpacing: '0.02em'
+              }}>{t}</span>
+            ))}
+          </div>
+
+          <div style={{ marginTop: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+            <motion.a whileHover={{ y: -3, scale: 1.02 }} href={p.live} target="_blank" rel="noreferrer" style={{ 
+              padding: '10px', fontSize: '0.75rem', background: '#fff', 
+              color: '#000', border: 'none', borderRadius: '10px', fontWeight: 900,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+              boxShadow: '0 10px 20px rgba(255,255,255,0.05)'
+            }}>
+              Live Demo <ArrowUpRight size={14} />
+            </motion.a>
+            
+            <motion.a whileHover={{ y: -3, background: 'rgba(255, 255, 255, 0.08)' }} href={p.github} target="_blank" rel="noreferrer" style={{ 
+              padding: '10px', fontSize: '0.75rem', background: 'rgba(255, 255, 255, 0.02)', 
+              color: '#fff', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '10px', fontWeight: 700,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+              transition: 'background 0.3s'
+            }}>
+              Repository <Github size={14} />
+            </motion.a>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
@@ -774,8 +811,8 @@ const Projects = () => {
           zIndex: 1,
           marginBottom: '56px',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-          gap: '24px'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: '20px'
         }}
       >
         {filteredProjects.map((p, i) => (
@@ -857,14 +894,13 @@ const FloatingLogos = () => {
           src={logo.url}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ 
-            opacity: [logo.opacity * 0.8, logo.opacity, logo.opacity * 0.8],
-            scale: [1, 1.08, 1],
-            y: [0, -35, 0],
-            x: [0, 15, 0],
-            rotate: [0, 8, -8, 0]
+            opacity: [logo.opacity * 0.7, logo.opacity, logo.opacity * 0.7],
+            x: [0, 40, 0],
+            y: [0, -20, 0],
+            rotate: [0, 5, -5, 0]
           }}
           transition={{
-            duration: 12 + i * 1.5,
+            duration: 10 + i * 2,
             repeat: Infinity,
             ease: "easeInOut",
             delay: logo.delay
@@ -884,6 +920,63 @@ const FloatingLogos = () => {
   );
 };
 
+const SecurityBackground = () => {
+  const icons = [
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg", top: "15%", left: "15%", size: 55, delay: 0 },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg", top: "70%", left: "20%", size: 45, delay: 1 },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-original.svg", top: "25%", left: "75%", size: 50, delay: 2, filter: 'invert(1) opacity(0.3)' },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/ssh/ssh-original-wordmark.svg", top: "50%", left: "80%", size: 60, delay: 3, filter: 'invert(1) opacity(0.2)' }
+  ];
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}>
+      <div style={{ 
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        width: '500px', height: '500px', 
+        background: 'radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%)',
+        filter: 'blur(70px)', borderRadius: '50%', zIndex: 0
+      }} />
+      {icons.map((icon, i) => (
+        <motion.img
+          key={i}
+          src={icon.url}
+          animate={{ x: [0, 30, 0], y: [0, -20, 0], opacity: [0.06, 0.12, 0.06], rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 8 + i, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
+          style={{ position: 'absolute', width: `${icon.size}px`, left: icon.left, top: icon.top, filter: icon.filter || 'grayscale(0.8)', transformBox: 'fill-box', zIndex: 1 }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const DevOpsBackground = () => {
+  const icons = [
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg", top: "20%", left: "10%", size: 60, delay: 0 },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/jenkins/jenkins-original.svg", top: "75%", left: "80%", size: 55, delay: 2 },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg", top: "80%", left: "30%", size: 45, delay: 4, filter: 'invert(1) opacity(0.2)' }
+  ];
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}>
+      <div style={{ 
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        width: '500px', height: '500px', 
+        background: 'radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, transparent 70%)',
+        filter: 'blur(70px)', borderRadius: '50%', zIndex: 0
+      }} />
+      {icons.map((icon, i) => (
+        <motion.img
+          key={i}
+          src={icon.url}
+          animate={{ x: [0, -25, 0], y: [0, 25, 0], opacity: [0.06, 0.12, 0.06], rotate: [0, -8, 8, 0] }}
+          transition={{ duration: 9 + i, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
+          style={{ position: 'absolute', width: `${icon.size}px`, left: icon.left, top: icon.top, filter: icon.filter || 'grayscale(0.8)', transformBox: 'fill-box', zIndex: 1 }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const MernBackground = () => {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   
@@ -895,33 +988,23 @@ const MernBackground = () => {
   };
 
   const icons = [
-    { url: "https://raw.githubusercontent.com/devicons/devicon/icons/react/react-original.svg", top: "15%", left: "10%", size: 60, delay: 0 },
-    { url: "https://raw.githubusercontent.com/devicons/devicon/icons/nodejs/nodejs-original.svg", top: "70%", left: "15%", size: 55, delay: 1 },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg", top: "15%", left: "10%", size: 60, delay: 0 },
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg", top: "70%", left: "15%", size: 55, delay: 1 },
     { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg", top: "25%", left: "80%", size: 65, delay: 2 },
     { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg", top: "80%", left: "75%", size: 50, delay: 3, filter: 'invert(1) opacity(0.2)' },
-    { url: "https://raw.githubusercontent.com/devicons/devicon/icons/typescript/typescript-original.svg", top: "50%", left: "85%", size: 45, delay: 4 }
+    { url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg", top: "50%", left: "85%", size: 45, delay: 4 }
   ];
 
   return (
     <div 
-      onMouseMove={handleMouseMove}
-      style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'auto', zIndex: 1 }}
+      style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}
     >
-      {/* 🔦 Dynamic Spotlight Effect */}
+      {/* ⚛️ Fixed Central Glow */}
       <div style={{ 
-        position: 'absolute', 
-        inset: 0, 
-        background: `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, rgba(168, 85, 247, 0.08), transparent 40%)`,
-        zIndex: 2,
-        pointerEvents: 'none'
-      }} />
-
-      {/* ⚛️ Static Central Glow */}
-      <div style={{ 
-        position: 'absolute', top: '40%', left: '30%', 
-        width: '400px', height: '400px', 
-        background: 'radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%)',
-        filter: 'blur(60px)', borderRadius: '50%', zIndex: 0
+        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+        width: '600px', height: '600px', 
+        background: 'radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%)',
+        filter: 'blur(80px)', borderRadius: '50%', zIndex: 0
       }} />
 
       {icons.map((icon, i) => (
@@ -929,12 +1012,13 @@ const MernBackground = () => {
           key={i}
           src={icon.url}
           animate={{ 
-            y: [0, -15, 0],
-            rotate: [0, 3, -3, 0],
-            opacity: [0.08, 0.15, 0.08]
+            x: [0, -30, 0],
+            y: [0, 15, 0],
+            opacity: [0.08, 0.15, 0.08],
+            rotate: [0, -10, 10, 0]
           }}
           transition={{ 
-            duration: 6 + i, 
+            duration: 7 + i, 
             repeat: Infinity, 
             ease: "easeInOut",
             delay: icon.delay 
@@ -956,57 +1040,27 @@ const MernBackground = () => {
 
 
 const PremiumSkillCard = ({ cat, i, children }) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 30 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["3deg", "-3deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-3deg", "3deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98, y: 30 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       style={{ 
-        perspective: '1500px',
         gridColumn: window.innerWidth > 1024 
           ? (cat.classes.includes('lg:col-span-12') ? 'span 12' : (cat.classes.includes('lg:col-span-8') ? 'span 8' : (cat.classes.includes('lg:col-span-6') ? 'span 6' : 'span 4')))
           : 'span 12'
       }}
     >
-      <motion.div
-        style={{ 
-          rotateX, 
-          rotateY,
-          transformStyle: 'preserve-3d'
-        }}
-        className={`studio-card ${cat.classes}`}
-      >
-        {/* Subtle Edge Glow on Hover */}
+      <div className={`studio-card ${cat.classes}`}>
+        {/* Subtle Edge Glow */}
         <div style={{
           position: 'absolute', inset: 0, 
           boxShadow: `inset 0 0 40px ${cat.color}08`, 
           borderRadius: 'inherit', pointerEvents: 'none' 
         }} />
         {children}
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -1021,18 +1075,20 @@ const Skills = () => {
       classes: "col-span-12 lg:col-span-12",
       specialEffect: "floating-logos",
       skills: [
-        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", level: 98 },
-        { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", level: 85 },
-        { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", level: 88 },
-        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", level: 92 },
-        { name: "C Language", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg", level: 80 },
-        { name: "HTML5 & CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", level: 95 },
+        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/python/python-original.svg", level: 98 },
+        { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/cplusplus/cplusplus-original.svg", level: 85 },
+        { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/java/java-original.svg", level: 88 },
+        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/javascript/javascript-original.svg", level: 92 },
+        { name: "C Language", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/c/c-original.svg", level: 80 },
+        { name: "HTML5 & CSS3", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/html5/html5-original.svg", level: 95 },
         { name: "Data Structures", icon: <Binary size={14} />, level: 90 },
         { name: "Problem Solving", icon: <Brain size={14} />, level: 94 },
         { name: "OOPS Concepts", icon: <Layers size={14} />, level: 88 },
-        { name: "DBMS / SQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", level: 85 },
+        { name: "DBMS / SQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/mysql/mysql-original.svg", level: 85 },
         { name: "OS Fundamentals", icon: <Cpu size={14} />, level: 80 },
-        { name: "Computer Networks", icon: <Globe size={14} />, level: 78 }
+        { name: "Computer Networks", icon: <Globe size={14} />, level: 78 },
+        { name: "Algorithms", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/python/python-original.svg", level: 90 },
+        { name: "System Design", icon: <Layers size={14} />, level: 85 }
       ]
     },
     {
@@ -1043,16 +1099,18 @@ const Skills = () => {
       classes: "col-span-12 lg:col-span-8",
       specialEffect: "mern-bg",
       skills: [
-        { name: "React.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", level: 95 },
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", level: 90 },
-        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", level: 88, filter: 'invert(1)' },
-        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", level: 85 },
-        { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", level: 80 },
-        { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-line.svg", level: 82, filter: 'invert(1)' },
-        { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg", level: 95 },
-        { name: "GraphQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg", level: 75 },
-        { name: "Socket.io", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg", level: 80, filter: 'invert(1)' },
-        { name: "REST APIs", icon: <Command size={14} />, level: 95 }
+        { name: "React.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/react/react-original.svg", level: 95 },
+        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/nodejs/nodejs-original.svg", level: 90 },
+        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/express/express-original.svg", level: 88, filter: 'invert(1)' },
+        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/mongodb/mongodb-original.svg", level: 85 },
+        { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/typescript/typescript-original.svg", level: 80 },
+        { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/nextjs/nextjs-original.svg", level: 82, filter: 'invert(1)' },
+        { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/tailwindcss/tailwindcss-original.svg", level: 95 },
+        { name: "GraphQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/graphql/graphql-plain.svg", level: 75 },
+        { name: "Socket.io", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/socketio/socketio-original.svg", level: 80, filter: 'invert(1)' },
+        { name: "REST APIs", icon: <Command size={14} />, level: 95 },
+        { name: "Redux / Toolkit", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/redux/redux-original.svg", level: 85 },
+        { name: "Storybook", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/storybook/storybook-original.svg", level: 80 }
       ]
     },
     {
@@ -1061,11 +1119,12 @@ const Skills = () => {
       icon: <ShieldCheck size={32} />,
       color: "#f97316",
       classes: "col-span-12 lg:col-span-4",
+      specialEffect: "security-bg",
       skills: [
-        { name: "Kali Linux", icon: <Terminal size={14} />, level: 85 },
-        { name: "OWASP Top 10", icon: <Shield size={14} />, level: 80 },
-        { name: "Penetration Testing", icon: <Search size={14} />, level: 75 },
-        { name: "Network Sec", icon: <Globe size={14} />, level: 82 }
+        { name: "Kali Linux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/linux/linux-original.svg", level: 85 },
+        { name: "Metasploit", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/python/python-original.svg", level: 78 },
+        { name: "Nmap Sec", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/c/c-original.svg", level: 82 },
+        { name: "Cryptography", icon: <Lock size={14} />, level: 75 }
       ]
     },
     {
@@ -1074,11 +1133,12 @@ const Skills = () => {
       icon: <Box size={32} />,
       color: "#ec4899",
       classes: "col-span-12 lg:col-span-6",
+      specialEffect: "devops-bg",
       skills: [
-        { name: "Git Workflow", icon: <Github size={14} />, level: 92 },
-        { name: "Docker", icon: <Box size={14} />, level: 78 },
-        { name: "Linux Arch", icon: <Terminal size={14} />, level: 85 },
-        { name: "Deployment", icon: <Send size={14} />, level: 88 }
+        { name: "Git Workflow", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/git/git-original.svg", level: 92 },
+        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/docker/docker-original.svg", level: 88 },
+        { name: "Jenkins CI/CD", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/jenkins/jenkins-original.svg", level: 85 },
+        { name: "Linux Arch", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/linux/linux-original.svg", level: 88 }
       ]
     },
     {
@@ -1087,11 +1147,12 @@ const Skills = () => {
       icon: <Cloud size={32} />,
       color: "#06b6d4",
       classes: "col-span-12 lg:col-span-6",
+      specialEffect: "mern-bg",
       skills: [
-        { name: "Firebase", icon: <Database size={14} />, level: 90 },
-        { name: "Vercel / AWS", icon: <Globe size={14} />, level: 85 },
-        { name: "API Architecture", icon: <Share2 size={14} />, level: 92 },
-        { name: "Cloud Testing", icon: <CheckCircle2 size={14} />, level: 80 }
+        { name: "AWS Cloud", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", level: 82, filter: 'invert(1)' },
+        { name: "GCP Services", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/googlecloud/googlecloud-original.svg", level: 78 },
+        { name: "Supabase DB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/supabase/supabase-original.svg", level: 85 },
+        { name: "Netlify Dep", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@master/icons/netlify/netlify-original.svg", level: 88 }
       ]
     }
   ];
@@ -1114,6 +1175,8 @@ const Skills = () => {
           <PremiumSkillCard key={cat.title} cat={cat} i={i}>
             {cat.specialEffect === 'floating-logos' && <FloatingLogos />}
             {cat.specialEffect === 'mern-bg' && <MernBackground />}
+            {cat.specialEffect === 'security-bg' && <SecurityBackground />}
+            {cat.specialEffect === 'devops-bg' && <DevOpsBackground />}
             
 
 
@@ -1197,30 +1260,145 @@ const Skills = () => {
   );
 };
 
-const Certificates = () => {
-  const certifications = [
-    { title: "Generative AI", issuer: "Google Cloud", img: cert_google, color: "#4285F4" },
-    { title: "Cybersecurity", issuer: "IBM", img: cert_ibm, color: "#052FAD" },
-    { title: "Data Analytics", issuer: "Deloitte", img: cert_deloitte, color: "#86BC25" },
-    { title: "Web Architecture", issuer: "NxtWave", img: cert_nxtwave, color: "#22d3ee" },
-    { title: "ICCOSET Conf.", issuer: "GIET", img: cert_giet_conf, color: "#f97316" },
-    { title: "Python Pro", issuer: "CodTech", img: cert_codtech, color: "#3776ab" },
-    { title: "Development", issuer: "Simplilearn", img: cert_simplilearn, color: "#ff9900" },
-    { title: "Neural Logic", issuer: "Codec", img: cert_codec, color: "#8b5cf6" },
-    { title: "Autonomous Sys", issuer: "NxtWave", img: cert_autonomous, color: "#06b6d4" },
-    { title: "Model Fiesta", issuer: "SURAVI", img: cert_suravi, color: "#ec4899" },
-    { title: "CAD Designs", issuer: "NIELIT", img: cert_cad, color: "#10b981" },
-    { title: "Drone Aero.", issuer: "NIELIT", img: cert_drone, color: "#e11d48" },
-    { title: "Gemini AI", issuer: "Google", img: cert_gemini, color: "#4285F4" },
-    { title: "WordPress Dev", issuer: "Coursera", img: cert_wordpress, color: "#21759b" },
-    { title: "Static Web Design", issuer: "NxtWave", img: cert_static, color: "#22d3ee" },
-    { title: "Python Internship", issuer: "Codec", img: cert_codec_intern, color: "#8b5cf6" },
-    { title: "Research Paper", issuer: "GIET", img: cert_nccengt, color: "#f97316" },
-    { title: "Tech Workshop", issuer: "Skill dev", img: cert_workshop, color: "#8b5cf6" },
-    { title: "Global Simulation", issuer: "Deloitte", img: cert_deloatte_2, color: "#86BC25" },
-    { title: "Cyber Awareness", issuer: "Cisco", img: cert_cyber_awareness, color: "#00bceb" },
-    { title: "Nxtwave Mastery", issuer: "Tech Acad", img: cert_nxtwave_alt, color: "#22d3ee" }
+const Education = () => {
+  const education = [
+    {
+      degree: "Bachelor of Technology",
+      major: "Computer Science & Engineering",
+      institution: "GIET University, Gunupur",
+      period: "2023 — 2027",
+      grade: "Current CGPA: 8.9",
+      details: "Specializing in Full-stack Architecture and Cybersecurity. Active member of Technical Coding Hub.",
+      color: "var(--accent-cyan)",
+      icon: <Code2 size={24} />
+    },
+    {
+      degree: "Higher Secondary Education",
+      major: "Physics, Chemistry, Mathematics",
+      institution: "Council of Higher Secondary Education, Odisha",
+      period: "2021 — 2023",
+      grade: "Percentage: 86%",
+      details: "Focus on foundational sciences and engineering mathematics. Distinction in Physics.",
+      color: "var(--accent-purple)",
+      icon: <Binary size={24} />
+    },
+    {
+      degree: "Secondary School Education",
+      major: "General Sciences & Mathematics",
+      institution: "Board of Secondary Education, Odisha",
+      period: "2019 — 2021",
+      grade: "Percentage: 92%",
+      details: "Excellence in analytical logic and fundamental sciences.",
+      color: "var(--accent-blue)",
+      icon: <Terminal size={24} />
+    }
   ];
+
+  return (
+    <section id="education" className="section" style={{ padding: '160px 24px' }}>
+      <SectionHeader 
+        badge="ACADEMIC PATH" 
+        color="var(--accent-cyan)"
+        title={<><span className="text-gradient">Scholastic</span> Foundation</>} 
+        desc="A chronological documentation of my formal technical education and academic achievements." 
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', marginTop: '80px' }}>
+        {education.map((edu, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: i * 0.1 }}
+            className="glass-panel"
+            style={{ padding: '40px', position: 'relative', overflow: 'hidden' }}
+          >
+            {/* Background Icon Watermark */}
+            <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '6rem', opacity: 0.03, pointerEvents: 'none', color: '#fff' }}>
+               <GraduationCap size={120} />
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+              <div style={{ 
+                width: '48px', height: '48px', borderRadius: '14px', 
+                background: `${edu.color}10`, border: `1px solid ${edu.color}30`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: edu.color
+              }}>
+                {edu.icon}
+              </div>
+              <div>
+                <span style={{ fontSize: '0.65rem', fontWeight: 900, color: edu.color, letterSpacing: '0.2em', textTransform: 'uppercase' }}>{edu.period}</span>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: '4px 0 0' }}>{edu.degree}</h4>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <p style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>{edu.institution}</p>
+              <p style={{ color: edu.color, fontWeight: 600, fontSize: '0.85rem' }}>{edu.major}</p>
+            </div>
+
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '24px', opacity: 0.8 }}>
+              {edu.details}
+            </p>
+
+            <div style={{ 
+              display: 'inline-flex', alignItems: 'center', gap: '8px', 
+              padding: '8px 16px', background: 'rgba(255,255,255,0.03)', 
+              borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)'
+            }}>
+              <Award size={14} style={{ color: edu.color }} />
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff' }}>{edu.grade}</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const Certificates = () => {
+  const [activeFilter, setActiveFilter] = useState('ALL');
+  const [selectedCert, setSelectedCert] = useState(null);
+
+  const categories = [
+    { id: 'ALL', label: 'All' },
+    { id: 'GIET', label: 'GIET' },
+    { id: 'COURSERA', label: 'Coursera' },
+    { id: 'NXTWAVE', label: 'NxtWave' },
+    { id: 'COMPANY', label: "Company's" }
+  ];
+
+  const certifications = [
+    { title: "Intro to Generative AI", issuer: "Google Cloud", img: cert_google, color: "#4285F4", category: 'COMPANY' },
+    { title: "Cybersecurity Essentials", issuer: "IBM", img: cert_ibm, color: "#052FAD", category: 'COMPANY' },
+    { title: "Data Analytics Simulation", issuer: "Deloitte", img: cert_deloitte, color: "#86BC25", category: 'COMPANY' },
+    { title: "Responsive Web Dev Mastery", issuer: "NxtWave", img: cert_nxtwave, color: "#22d3ee", category: 'NXTWAVE' },
+    { title: "ICCOSET 2024 Conference", issuer: "GIET", img: cert_giet_conf, color: "#f97316", category: 'GIET' },
+    { title: "Python Programming Exp.", issuer: "CodTech", img: cert_codtech, color: "#3776ab", category: 'COMPANY' },
+    { title: "Full Stack Development", issuer: "Simplilearn", img: cert_simplilearn, color: "#ff9900", category: 'COMPANY' },
+    { title: "Neural Network Logic", issuer: "Codec", img: cert_codec, color: "#8b5cf6", category: 'COMPANY' },
+    { title: "Autonomous Vehicle Sys", issuer: "NxtWave", img: cert_autonomous, color: "#06b6d4", category: 'NXTWAVE' },
+    { title: "Model Fiesta 2025", issuer: "SURAVI", img: cert_suravi, color: "#ec4899", category: 'COMPANY' },
+    { title: "CAD Design Foundations", issuer: "NIELIT", img: cert_cad, color: "#10b981", category: 'COMPANY' },
+    { title: "Drone Aerodynamics", issuer: "NIELIT", img: cert_drone, color: "#e11d48", category: 'COMPANY' },
+    { title: "Google Gemini AI Acad.", issuer: "Google", img: cert_gemini, color: "#4285F4", category: 'COMPANY' },
+    { title: "WordPress Dev Pro", issuer: "Coursera", img: cert_wordpress, color: "#21759b", category: 'COURSERA' },
+    { title: "Static Website Design", issuer: "NxtWave", img: cert_static, color: "#22d3ee", category: 'NXTWAVE' },
+    { title: "Python Tech Internship", issuer: "Codec", img: cert_codec_intern, color: "#8b5cf6", category: 'COMPANY' },
+    { title: "Research Paper (GIET)", issuer: "NCCENGT", img: cert_nccengt, color: "#f97316", category: 'GIET' },
+    { title: "Industrial Workshop", issuer: "Skill dev", img: cert_workshop, color: "#8b5cf6", category: 'COMPANY' },
+    { title: "Deloitte Consulting Sim.", issuer: "Deloitte", img: cert_deloatte_2, color: "#86BC25", category: 'COMPANY' },
+    { title: "Cybersecurity Awareness", issuer: "Cisco", img: cert_cyber_awareness, color: "#00bceb", category: 'COMPANY' },
+    { title: "NxtWave Professional", issuer: "Mastery", img: cert_nxtwave_alt, color: "#22d3ee", category: 'NXTWAVE' },
+    { title: "HackerRank Skills Gold", issuer: "HackerRank", img: cert_hackerrank, color: "#2ec866", category: 'COMPANY' },
+    { title: "IBM Big Data Expert", issuer: "IBM Cloud", img: cert_ibm_bigdata, color: "#052FAD", category: 'COMPANY' }
+  ];
+
+  const filteredCerts = activeFilter === 'ALL' 
+    ? certifications 
+    : certifications.filter(c => c.category === activeFilter);
 
   return (
     <section id="certificates" className="section" style={{ padding: '160px 24px' }}>
@@ -1228,38 +1406,129 @@ const Certificates = () => {
         badge="CREDENTIALS" 
         color="var(--accent-purple)"
         title={<><span className="text-gradient">Professional</span> Validation</>} 
-        desc="A precision-engineered archive of certifications, academic excellence, and technical mastery." 
+        desc="A precision-engineered archive of certifications and technical mastery." 
       />
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '24px', marginTop: '80px' }}>
-        {certifications.map((cert, i) => (
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap', marginTop: '60px', marginBottom: '40px' }}>
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveFilter(cat.id)}
+            style={{
+              padding: '10px 24px', borderRadius: '12px',
+              border: `1px solid ${activeFilter === cat.id ? 'var(--accent-purple)' : 'rgba(255,255,255,0.08)'}`,
+              background: activeFilter === cat.id ? 'rgba(139, 92, 246, 0.15)' : 'rgba(255,255,255,0.02)',
+              color: activeFilter === cat.id ? '#fff' : 'rgba(255,255,255,0.5)',
+              fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer'
+            }}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: '24px' }}>
+        {filteredCerts.map((cert, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.05 }}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            onClick={() => setSelectedCert(cert)}
             style={{ 
-              background: 'rgba(255,255,255,0.02)',
-              borderRadius: '20px',
-              border: '1px solid rgba(255,255,255,0.06)',
-              overflow: 'hidden',
-              position: 'relative'
+              background: 'rgba(255,255,255,0.02)', borderRadius: '24px',
+              border: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden',
+              cursor: 'pointer'
             }}
           >
             <div style={{ aspectRatio: '16/10', position: 'relative' }}>
               <img src={cert.img} alt={cert.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #0a0a0c, transparent)' }}></div>
-              <div style={{ position: 'absolute', bottom: '12px', left: '16px' }}>
-                <span style={{ fontSize: '0.55rem', fontWeight: 900, color: cert.color, letterSpacing: '0.1em' }}>{cert.issuer.toUpperCase()}</span>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #000 0%, transparent 80%)' }}></div>
+              
+              {/* Verification & Category Badge */}
+              <div style={{ 
+                position: 'absolute', top: '16px', right: '16px', 
+                padding: '6px 12px', borderRadius: '100px', 
+                background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                border: '1px solid rgba(255,255,255,0.08)',
+                zIndex: 2
+              }}>
+                 <Award size={10} style={{ color: cert.color || 'var(--accent-purple)' }} />
+                 <span style={{ 
+                   fontSize: '0.55rem', fontWeight: 900, 
+                   color: '#fff', textTransform: 'uppercase', 
+                   letterSpacing: '0.1em' 
+                 }}>
+                   {cert.category}
+                 </span>
+              </div>
+
+              <div style={{ position: 'absolute', bottom: '16px', left: '20px' }}>
+                <span style={{ fontSize: '0.6rem', fontWeight: 900, color: cert.color || 'var(--accent-purple)', letterSpacing: '0.15em' }}>{cert.issuer}</span>
               </div>
             </div>
-            <div style={{ padding: '16px' }}>
-              <h4 style={{ color: '#fff', fontSize: '0.95rem', fontWeight: 800, margin: 0, letterSpacing: '-0.01em' }}>{cert.title}</h4>
+            <div style={{ padding: '20px' }}>
+              <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 800, margin: 0 }}>{cert.title}</h4>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* 🖼️ Cinematic Lightbox Overlay */}
+      <AnimatePresence>
+        {selectedCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+              background: "rgba(2, 6, 23, 0.98)",
+              backdropFilter: "blur(20px)",
+              display: "flex", justifyContent: "center", alignItems: "center",
+              zIndex: 10000, padding: '24px'
+            }}
+            onClick={() => setSelectedCert(null)}
+          >
+            <motion.button
+              whileHover={{ rotate: 90 }}
+              style={{
+                position: 'absolute', top: '30px', right: '30px',
+                background: 'rgba(255,255,255,0.05)', border: 'none', color: '#fff', 
+                cursor: 'pointer', width: '50px', height: '50px', borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}
+            >
+              <X size={24} />
+            </motion.button>
+
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              style={{ position: 'relative', maxWidth: '1100px', width: '100%' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedCert.img}
+                alt={selectedCert.title}
+                style={{
+                  width: "100%", borderRadius: "24px",
+                  boxShadow: "0 50px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1)",
+                }}
+              />
+              <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                 <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: '8px' }}>{selectedCert.title}</h2>
+                 <p style={{ color: 'var(--text-muted)', letterSpacing: '0.2em', fontWeight: 800, textTransform: 'uppercase', fontSize: '0.8rem' }}>
+                    {selectedCert.issuer} // OFFICIAL CREDENTIAL
+                 </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
@@ -1368,6 +1637,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <Certificates />
+      <Education />
       
       <section id="resume" className="section" style={{ textAlign: 'center' }}>
          <motion.div 
@@ -1381,17 +1651,73 @@ export default function Home() {
             <p style={{ color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '500px', margin: '0 auto 40px' }}>
                Access my detailed resume for a full breakdown of certifications, coursework, and professional achievements.
             </p>
-            <a href="/resume" className="btn-premium btn-primary">Download Case Study PDF <Download size={18} /></a>
+            <Link to="/resume" className="btn-premium btn-primary">Download Case Study PDF <Download size={18} /></Link>
          </motion.div>
       </section>
 
       <About />
       <Contact />
 
-      <footer style={{ padding: '80px 24px 40px', borderTop: '1px solid var(--glass-border)', textAlign: 'center' }}>
-         <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', letterSpacing: '0.1em' }}>
+      <footer style={{ 
+        padding: '120px 24px 60px', 
+        background: 'linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.03))',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* 🔗 Social Connectivity Bar */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', marginBottom: '48px' }}>
+          {[
+            { icon: <Github size={22} />, link: "https://github.com/lokanathmeher19" },
+            { icon: <Linkedin size={22} />, link: "https://www.linkedin.com/in/lokanath-meher-a79506353/" },
+            { icon: <Instagram size={22} />, link: "https://www.instagram.com/syntxerror_01/" },
+            { icon: <XIcon size={20} />, link: "https://x.com/Lokanath_meher_" }
+          ].map((soc, i) => (
+            <motion.a 
+              key={i}
+              href={soc.link}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -8, color: 'var(--accent-cyan)' }}
+              style={{ color: 'rgba(255,255,255,0.3)', transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)' }}
+            >
+              {soc.icon}
+            </motion.a>
+          ))}
+        </div>
+
+        {/* 📟 System Status Bar */}
+        <div style={{ 
+          maxWidth: '800px', margin: '0 auto 40px', padding: '16px',
+          background: 'rgba(255,255,255,0.02)', borderRadius: '100px',
+          border: '1px solid rgba(255,255,255,0.05)', display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between', paddingLeft: '32px', paddingRight: '32px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }}></div>
+            <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em' }}>ARCHIVE_STATUS: PRODUCTION_READY</span>
+          </div>
+          <div style={{ height: '2px', width: '40px', background: 'rgba(255,255,255,0.05)' }}></div>
+          <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em' }}>DEPLOYMENT_V: 2.4.0_STABLE</span>
+        </div>
+
+         <p style={{ 
+           color: 'rgba(255,255,255,0.3)', 
+           fontSize: '0.75rem', 
+           letterSpacing: '0.4em',
+           fontWeight: 900,
+           textTransform: 'uppercase'
+         }}>
            Designed & Engineered by Lokanath Meher // © {new Date().getFullYear()}
          </p>
+
+         {/* Bottom Glow */}
+         <div style={{ 
+           position: 'absolute', bottom: '-150px', left: '50%', transform: 'translateX(-50%)',
+           width: '1000px', height: '300px', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)',
+           filter: 'blur(100px)', zIndex: -1
+         }}></div>
       </footer>
 
       <div className="app-bg"></div>

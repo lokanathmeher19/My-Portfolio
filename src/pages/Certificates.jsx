@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Award } from "lucide-react";
-
+import { BookOpen, Award, Maximize2, X, Download, ExternalLink } from "lucide-react";
 
 // 🖼️ Import Certificate Images
 import nxtwave_responsive from "../assets/certs/nxtwave_responsive.jpg";
@@ -26,327 +25,248 @@ import deloatte_misspelled from "../assets/certs/Deloatte.jpg";
 import cyber_awareness from "../assets/certs/Introduction to Cybersecurity Awareness_page-0001.jpg";
 import nxtwave_alt from "../assets/certs/Nxtwave.jpeg";
 
-// ✅ Certificates data (added URLs for View button)
 const CERTS = {
   nxtwave: [
-    {
-      title: "Build Your Own Responsive Website",
-      org: "NxtWave",
-      date: "2025",
-      img: nxtwave_responsive,
-      link: nxtwave_responsive,
-    },
-    {
-      title: "Autonomous Vehicles Masterclass",
-      org: "NxtWave",
-      date: "2025",
-      img: nxtwave_autonomous,
-      link: nxtwave_autonomous,
-    },
-    {
-      title: "Build Your Own Static Website",
-      org: "NxtWave",
-      date: "2025",
-      img: nxtwave_static,
-      link: nxtwave_static,
-    },
-    {
-      title: "Mastery Certification",
-      org: "NxtWave",
-      date: "2025",
-      img: nxtwave_alt,
-      link: nxtwave_alt,
-    },
+    { title: "Build Your Own Responsive Website", org: "NxtWave", date: "2025", img: nxtwave_responsive },
+    { title: "Autonomous Vehicles Masterclass", org: "NxtWave", date: "2025", img: nxtwave_autonomous },
+    { title: "Build Your Own Static Website", org: "NxtWave", date: "2025", img: nxtwave_static },
+    { title: "Mastery Certification", org: "NxtWave", date: "2025", img: nxtwave_alt },
   ],
   coursera: [
-    {
-      title: "Build a free website with WordPress",
-      org: "Coursera Project Network",
-      date: "2025",
-      img: coursera_wordpress,
-      link: coursera_wordpress,
-    },
-    {
-      title: "Introduction to Generative AI",
-      org: "Google Cloud",
-      date: "2025",
-      img: coursera_genai,
-      link: coursera_genai,
-    },
-    {
-      title: "Introduction to Cybersecurity Essentials",
-      org: "IBM",
-      date: "2025",
-      img: coursera_cybersecurity,
-      link: coursera_cybersecurity,
-    },
-    {
-      title: "Introduction to Gemini for Google Workspace",
-      org: "Google Cloud",
-      date: "2025",
-      img: coursera_gemini,
-      link: coursera_gemini,
-    },
-    {
-      title: "Cybersecurity Awareness",
-      org: "Cisco",
-      date: "2025",
-      img: cyber_awareness,
-      link: cyber_awareness,
-    },
+    { title: "Build a free website with WordPress", org: "Coursera", date: "2025", img: coursera_wordpress },
+    { title: "Introduction to Generative AI", org: "Google Cloud", date: "2025", img: coursera_genai },
+    { title: "Introduction to Cybersecurity Essentials", org: "IBM", date: "2025", img: coursera_cybersecurity },
+    { title: "Introduction to Gemini", org: "Google Cloud", date: "2025", img: coursera_gemini },
+    { title: "Cybersecurity Awareness", org: "Cisco", date: "2025", img: cyber_awareness },
   ],
   giet: [
-    {
-      title: "Bootcamp on CAD Designs to 3D Printing",
-      org: "NIELIT & GIET",
-      date: "2025",
-      img: giet_cad_bootcamp,
-      link: giet_cad_bootcamp,
-    },
-    {
-      title: "Model Fiesta 'SURAVI-2K25'",
-      org: "GIET",
-      date: "2025",
-      img: giet_suravi_model,
-      link: giet_suravi_model,
-    },
-    {
-      title: "Paper Presentation NCCENGT-2025",
-      org: "GIET",
-      date: "2025",
-      img: giet_nccengt_paper,
-      link: giet_nccengt_paper,
-    },
-    {
-      title: "Drone Aeromechanics Bootcamp",
-      org: "NIELIT",
-      date: "2025",
-      img: giet_drone_bootcamp,
-      link: giet_drone_bootcamp,
-    },
-    {
-      title: "International Conference ICCOSET-2024",
-      org: "GIET",
-      date: "2024",
-      img: giet_iccoset_conf,
-      link: giet_iccoset_conf,
-    },
+    { title: "CAD Designs to 3D Printing", org: "NIELIT & GIET", date: "2025", img: giet_cad_bootcamp },
+    { title: "Model Fiesta 'SURAVI-2K25'", org: "GIET", date: "2025", img: giet_suravi_model },
+    { title: "Paper Presentation NCCENGT-2025", org: "GIET", date: "2025", img: giet_nccengt_paper },
+    { title: "Drone Aeromechanics Bootcamp", org: "NIELIT", date: "2025", img: giet_drone_bootcamp },
+    { title: "International Conf ICCOSET-2024", org: "GIET", date: "2024", img: giet_iccoset_conf },
   ],
   other: [
-    {
-      title: "Python Programming Internship",
-      org: "CodTech IT Solutions",
-      date: "2025",
-      img: codtech_python,
-      link: codtech_python,
-    },
-    {
-      title: "Python Developer Internship (Achievement)",
-      org: "Codec Technologies",
-      date: "2025",
-      img: codec_python_achievement,
-      link: codec_python_achievement,
-    },
-    {
-      title: "Python Developer Internship",
-      org: "Codec Technologies",
-      date: "2025",
-      img: codec_python_internship,
-      link: codec_python_internship,
-    },
-    {
-      title: "What is Software Development?",
-      org: "Simplilearn",
-      date: "2025",
-      img: simplilearn_software_dev,
-      link: simplilearn_software_dev,
-    },
-    {
-      title: "Data Analytics Job Simulation",
-      org: "Deloitte",
-      date: "2025",
-      img: deloitte_data_analytics,
-      link: deloitte_data_analytics,
-    },
-    {
-      title: "Technical Workshop Performance",
-      org: "Skill Development",
-      date: "2025",
-      img: workshop,
-      link: workshop,
-    },
-    {
-      title: "Strategic Global Simulation",
-      org: "Deloitte",
-      date: "2025",
-      img: deloatte_misspelled,
-      link: deloatte_misspelled,
-    },
+    { title: "Python Programming Internship", org: "CodTech", date: "2025", img: codtech_python },
+    { title: "Python Developer (Achievement)", org: "Codec Tech", date: "2025", img: codec_python_achievement },
+    { title: "Python Developer Internship", org: "Codec Tech", date: "2025", img: codec_python_internship },
+    { title: "What is Software Development?", org: "Simplilearn", date: "2025", img: simplilearn_software_dev },
+    { title: "Data Analytics Simulation", org: "Deloitte", date: "2025", img: deloitte_data_analytics },
+    { title: "Strategic Global Simulation", org: "Deloitte", date: "2025", img: deloatte_misspelled },
   ],
 };
 
-import useScrollNavigation from '../hooks/useScrollNavigation'
-
 export default function Certificates() {
-  useScrollNavigation('/blog', '/skills')
   const [tab, setTab] = useState("nxtwave");
   const [selectedCert, setSelectedCert] = useState(null);
 
   const getTabIcon = (t) => {
     switch (t) {
       case "nxtwave":
-        return <img src="/gallery/nxtwave_logo.png" alt="NxtWave" style={{ width: 20, height: 20, objectFit: "contain" }} />;
+        return <img src="/gallery/nxtwave_logo.png" alt="NxtWave" style={{ width: 16, height: 16, objectFit: "contain" }} />;
       case "giet":
-        return <img src="/gallery/giet_logo.jpg" alt="GIET" style={{ width: 20, height: 20, objectFit: "cover", borderRadius: "50%" }} />;
+        return <img src="/gallery/giet_logo.jpg" alt="GIET" style={{ width: 16, height: 16, objectFit: "cover", borderRadius: "50%" }} />;
       case "coursera":
-        return <img src="/gallery/coursera_logo.png" alt="Coursera" style={{ width: 20, height: 20, objectFit: "contain", borderRadius: "50%" }} />;
+        return <img src="/gallery/coursera_logo.png" alt="Coursera" style={{ width: 16, height: 16, objectFit: "contain", borderRadius: "50%" }} />;
       case "other":
-        return <Award size={18} />;
+        return <Award size={14} />;
       default:
         return null;
     }
   };
 
   return (
-    <section className="container" style={{ padding: "40px 0", position: "relative", overflow: "hidden" }}>
-      
-      <div className="card" style={{ background: "#111", borderRadius: 12, padding: 24 }}>
-        <h2 style={{ fontSize: "1.8rem", color: "#fff", marginBottom: 4 }}>Certificates 🏅</h2>
-        <p className="lead" style={{ color: "#aaa" }}>
-          Explore my certifications — technical & others.
-        </p>
+    <section className="section" style={{ minHeight: '100vh', position: 'relative' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundImage: 'radial-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px)', backgroundSize: '40px 40px', pointerEvents: 'none' }}></div>
 
-        {/* Tabs */}
-        <div style={{ display: "flex", gap: 10, marginTop: 16, flexWrap: "wrap" }}>
-          {["nxtwave", "coursera", "giet", "other"].map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={tab === t ? "tab active" : "tab"}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{ textAlign: 'center', marginBottom: '60px' }}
+      >
+        <span className="badge">Accreditation</span>
+        <h1 className="hero-title" style={{ fontSize: '3rem', marginBottom: '16px' }}>Professional Certifications</h1>
+        <p style={{ color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
+          Documenting a continuous commitment to engineering excellence and specialized technical research.
+        </p>
+      </motion.div>
+
+      {/* 🧭 Archival Navigation Tabs */}
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        gap: "12px", 
+        marginBottom: "48px", 
+        flexWrap: "wrap",
+        position: 'relative',
+        zIndex: 10
+      }}>
+        {["nxtwave", "coursera", "giet", "other"].map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`btn-premium ${tab === t ? "btn-primary" : "btn-secondary"}`}
+            style={{
+              padding: "10px 24px",
+              borderRadius: "100px",
+              fontSize: "0.75rem",
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              background: tab === t ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.02)',
+              color: tab === t ? '#000' : 'rgba(255,255,255,0.5)',
+              border: tab === t ? 'none' : '1px solid rgba(255,255,255,0.08)',
+              gap: '10px'
+            }}
+          >
+            {getTabIcon(t)}
+            {t === "giet" ? "GIET UNIVERSITY" : t}
+          </button>
+        ))}
+      </div>
+
+      {/* 📜 Themed Certificates Grid */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+        gap: "24px",
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <AnimatePresence mode="wait">
+          {CERTS[tab].map((c, idx) => (
+            <motion.div
+              key={c.title}
+              layout
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              className="glass-panel"
               style={{
-                padding: "8px 18px",
-                borderRadius: 8,
-                border: "none",
-                cursor: "pointer",
-                background: tab === t ? "#007bff" : "#333",
-                color: "#fff",
-                fontWeight: 500,
-                transition: "0.3s",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
+                borderRadius: "24px",
+                padding: "12px",
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                border: '1px solid rgba(255,255,255,0.06)'
               }}
             >
-              {getTabIcon(t)}
-              <span>{t === "nxtwave" ? "NXTWAVE" : t === "coursera" ? "COURSERA" : t === "giet" ? "GIET,BBER" : "Others"}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Certificates Grid */}
-        <div
-          className="certs-grid"
-          style={{
-            marginTop: 28,
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: 20,
-          }}
-        >
-          <AnimatePresence mode="wait">
-            {CERTS[tab].map((c, idx) => (
-              <motion.div
-                key={c.title}
-                className="cert card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                whileHover={{
-                  scale: 1.03,
-                  boxShadow: "0 0 15px rgba(0, 123, 255, 0.4)",
-                }}
-                style={{
-                  background: "#1a1a1a",
-                  borderRadius: 12,
-                  padding: 16,
-                  color: "#fff",
-                }}
-              >
+              <div style={{ 
+                position: 'relative', 
+                height: '180px', 
+                borderRadius: '16px', 
+                overflow: 'hidden',
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                marginBottom: '20px'
+              }}>
                 <img
                   src={c.img}
                   alt={c.title}
-                  style={{
-                    width: "100%",
-                    height: 160,
-                    borderRadius: 10,
-                    objectFit: "cover",
-                    marginBottom: 12,
-                  }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
-                <strong style={{ fontSize: 16 }}>{c.title}</strong>
-                <div className="muted" style={{ fontSize: 13, color: "#bbb" }}>
-                  {c.org} • {c.date}
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(2,6,23,0.8), transparent)' }}></div>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setSelectedCert(c)}
+                  style={{
+                    position: 'absolute', top: '12px', right: '12px',
+                    width: '36px', height: '36px', borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255,255,255,0.2)', color: '#fff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Maximize2 size={16} />
+                </motion.button>
+              </div>
+
+              <div style={{ padding: '0 12px 20px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff', marginBottom: '8px', lineHeight: 1.4 }}>{c.title}</h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                   <BookOpen size={12} /> {c.org} • {c.date}
                 </div>
 
-                <div style={{ marginTop: 12 }}>
-                  <button
-                    className="btn"
+                <div style={{ marginTop: 'auto', paddingTop: '20px', display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
+                  <motion.button
+                    whileHover={{ background: 'rgba(255,255,255,0.06)' }}
                     onClick={() => setSelectedCert(c)}
                     style={{
-                      background: "#007bff",
-                      border: "none",
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.1)",
                       color: "white",
-                      borderRadius: 6,
-                      padding: "6px 14px",
+                      borderRadius: "12px",
+                      padding: "10px",
                       cursor: "pointer",
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
                     }}
                   >
-                    View
-                  </button>
+                    PREVIEW DOCUMENT <ExternalLink size={14} />
+                  </motion.button>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
-      {/* Modal Preview */}
+      {/* 🖼️ Cinematic Lightbox */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div
-            className="modal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "rgba(0,0,0,0.8)",
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: "rgba(2, 6, 23, 0.95)",
+              WebkitBackdropFilter: "blur(20px)",
+              backdropFilter: "blur(20px)",
               display: "flex",
+              flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 1000,
+              zIndex: 10000,
+              padding: '40px'
             }}
             onClick={() => setSelectedCert(null)}
           >
-            <motion.img
-              src={selectedCert.img}
-              alt={selectedCert.title}
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
+            <motion.button
+              whileHover={{ rotate: 90 }}
               style={{
-                maxWidth: "90%",
-                maxHeight: "85%",
-                borderRadius: 10,
-                boxShadow: "0 0 25px rgba(255,255,255,0.2)",
+                position: 'absolute', top: '40px', right: '40px',
+                background: 'none', border: 'none', color: '#fff', cursor: 'pointer'
               }}
+            >
+              <X size={32} />
+            </motion.button>
+
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              style={{ position: 'relative', maxWidth: '1000px', width: '100%' }}
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <img
+                src={selectedCert.img}
+                alt={selectedCert.title}
+                style={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  boxShadow: "0 50px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1)",
+                }}
+              />
+              <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                 <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', marginBottom: '8px' }}>{selectedCert.title}</h2>
+                 <p style={{ color: 'var(--text-muted)', letterSpacing: '0.1em', fontWeight: 600 }}>{selectedCert.org.toUpperCase()} // ACQUIRED: {selectedCert.date}</p>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

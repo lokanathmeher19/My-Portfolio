@@ -214,7 +214,6 @@ export default function Certificates() {
         </AnimatePresence>
       </div>
 
-      {/* 🖼️ Cinematic Lightbox */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div
@@ -224,47 +223,78 @@ export default function Certificates() {
             style={{
               position: "fixed",
               top: 0, left: 0, right: 0, bottom: 0,
-              background: "rgba(2, 6, 23, 0.95)",
+              background: "rgba(2, 6, 23, 0.98)",
               WebkitBackdropFilter: "blur(20px)",
               backdropFilter: "blur(20px)",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
+              justifyContent: "flex-start", // Start from top to allow scrolling
               alignItems: "center",
               zIndex: 10000,
-              padding: '40px'
+              padding: '60px 20px 40px', // More top padding for the X button
+              overflowY: 'auto' // Allow vertical scrolling
             }}
             onClick={() => setSelectedCert(null)}
           >
             <motion.button
-              whileHover={{ rotate: 90 }}
+              whileHover={{ rotate: 90, scale: 1.1 }}
               style={{
-                position: 'absolute', top: '40px', right: '40px',
-                background: 'none', border: 'none', color: '#fff', cursor: 'pointer'
+                position: 'fixed', // Keep close button fixed while scrolling
+                top: '24px', right: '24px',
+                background: 'rgba(255,255,255,0.1)', 
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '50%',
+                width: '48px', height: '48px',
+                color: '#fff', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                zIndex: 10001
               }}
+              onClick={() => setSelectedCert(null)}
             >
-              <X size={32} />
+              <X size={24} />
             </motion.button>
 
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              style={{ position: 'relative', maxWidth: '1000px', width: '100%' }}
+              style={{ 
+                position: 'relative', 
+                maxWidth: '900px', 
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={selectedCert.img}
                 alt={selectedCert.title}
                 style={{
-                  width: "100%",
-                  borderRadius: "20px",
+                  width: "auto",
+                  maxWidth: "100%",
+                  maxHeight: "90vh", // Don't let it exceed viewpoint height initially
+                  borderRadius: "12px",
                   boxShadow: "0 50px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1)",
+                  objectFit: "contain" // Ensure full certificate is shown
                 }}
               />
-              <div style={{ marginTop: '24px', textAlign: 'center' }}>
-                 <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#fff', marginBottom: '8px' }}>{selectedCert.title}</h2>
-                 <p style={{ color: 'var(--text-muted)', letterSpacing: '0.1em', fontWeight: 600 }}>{selectedCert.org.toUpperCase()} // ACQUIRED: {selectedCert.date}</p>
+              <div style={{ marginTop: '32px', textAlign: 'center', paddingBottom: '40px' }}>
+                 <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: '12px' }}>{selectedCert.title}</h2>
+                 <p style={{ color: 'var(--text-secondary)', letterSpacing: '0.1em', fontWeight: 600 }}>
+                   {selectedCert.org.toUpperCase()} • ACQUIRED: {selectedCert.date}
+                 </p>
+                 <div style={{ marginTop: '24px', display: 'flex', gap: '16px', justifyContent: 'center' }}>
+                   <a 
+                     href={selectedCert.img} 
+                     download={`${selectedCert.title}.jpg`}
+                     className="btn-premium btn-primary"
+                     style={{ padding: '12px 24px', fontSize: '0.85rem' }}
+                   >
+                     Download Certificate <Download size={16} />
+                   </a>
+                 </div>
               </div>
             </motion.div>
           </motion.div>

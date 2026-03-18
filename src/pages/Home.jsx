@@ -1275,91 +1275,174 @@ const Education = () => {
       period: "2023 — 2027",
       grade: "Current CGPA: 8.9",
       details: "Specializing in Full-stack Architecture and Cybersecurity. Active member of Technical Coding Hub.",
-      color: "var(--accent-cyan)",
-      icon: <Code2 size={24} />
+      color: "#22d3ee",
+      icon: <Code2 size={24} />,
+      status: "CURRENTLY ENROLLED"
     },
     {
       degree: "Higher Secondary Education",
       major: "Physics, Chemistry, Mathematics",
-      institution: "Council of Higher Secondary Education, Odisha",
+      institution: "CHSE, Odisha",
       period: "2021 — 2023",
-      grade: "Percentage: 86%",
+      grade: "Score: 86%",
       details: "Focus on foundational sciences and engineering mathematics. Distinction in Physics.",
-      color: "var(--accent-purple)",
-      icon: <Binary size={24} />
+      color: "#8b5cf6",
+      icon: <Binary size={24} />,
+      status: "COMPLETED"
     },
     {
       degree: "Secondary School Education",
       major: "General Sciences & Mathematics",
-      institution: "Board of Secondary Education, Odisha",
+      institution: "BSE, Odisha",
       period: "2019 — 2021",
-      grade: "Percentage: 92%",
+      grade: "Score: 92%",
       details: "Excellence in analytical logic and fundamental sciences.",
-      color: "var(--accent-blue)",
-      icon: <Terminal size={24} />
+      color: "#3b82f6",
+      icon: <Terminal size={24} />,
+      status: "COMPLETED"
     }
   ];
 
   return (
-    <section id="education" className="section" style={{ padding: '160px 24px' }}>
+    <section id="education" className="section" style={{ padding: '160px 24px', position: 'relative' }}>
+      {/* 🔮 Background Meta-Grid */}
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.1, background: 'radial-gradient(circle, var(--accent-cyan) 1px, transparent 1px)', backgroundSize: '40px 40px', pointerEvents: 'none' }}></div>
+
       <SectionHeader 
-        badge="ACADEMIC PATH" 
+        badge="TIMELINE" 
         color="var(--accent-cyan)"
-        title={<><span className="text-gradient">Scholastic</span> Foundation</>} 
-        desc="A chronological documentation of my formal technical education and academic achievements." 
+        title={<><span className="text-gradient">Academic</span> Odyssey</>} 
+        desc="A specialized chronological trace of engineering evolution and academic excellence." 
       />
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', marginTop: '80px' }}>
+      <div style={{ 
+        position: 'relative', 
+        maxWidth: '1000px', 
+        margin: '80px auto 0',
+        padding: '20px 0'
+      }}>
+        {/* ⚡ Vertical Power Line */}
+        <div style={{ 
+          position: 'absolute', left: '50%', top: 0, bottom: 0, 
+          width: '2px', background: 'linear-gradient(to bottom, transparent, rgba(34, 211, 238, 0.4), var(--accent-purple), transparent)',
+          transform: 'translateX(-50%)',
+          zIndex: 0
+        }}></div>
+
         {education.map((edu, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: i * 0.1 }}
-            className="glass-panel"
-            style={{ padding: '40px', position: 'relative', overflow: 'hidden' }}
-          >
-            {/* Background Icon Watermark */}
-            <div style={{ position: 'absolute', top: '-10px', right: '-10px', fontSize: '6rem', opacity: 0.03, pointerEvents: 'none', color: '#fff' }}>
-               <GraduationCap size={120} />
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+          <div key={i} style={{ 
+            display: 'flex', 
+            justifyContent: i % 2 === 0 ? 'flex-start' : 'flex-end',
+            width: '100%',
+            marginBottom: '60px',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            {/* 🧿 Timeline Node */}
+            <motion.div 
+              initial={{ scale: 0, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              style={{
+                position: 'absolute', left: '50%', top: '24px',
+                width: '16px', height: '16px', borderRadius: '50%',
+                background: edu.color, transform: 'translateX(-50%)',
+                boxShadow: `0 0 20px ${edu.color}, 0 0 5px #fff`,
+                zIndex: 10
+              }}
+            >
               <div style={{ 
-                width: '48px', height: '48px', borderRadius: '14px', 
-                background: `${edu.color}10`, border: `1px solid ${edu.color}30`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: edu.color
-              }}>
-                {edu.icon}
-              </div>
-              <div>
-                <span style={{ fontSize: '0.65rem', fontWeight: 900, color: edu.color, letterSpacing: '0.2em', textTransform: 'uppercase' }}>{edu.period}</span>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: '4px 0 0' }}>{edu.degree}</h4>
-              </div>
-            </div>
+                position: 'absolute', inset: '-6px', borderRadius: '50%', 
+                border: `1px solid ${edu.color}`, opacity: 0.3 
+              }}></div>
+            </motion.div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <p style={{ color: 'var(--text-primary)', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>{edu.institution}</p>
-              <p style={{ color: edu.color, fontWeight: 600, fontSize: '0.85rem' }}>{edu.major}</p>
-            </div>
+            {/* 📄 Glass Card */}
+            <motion.div
+              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                width: '45%',
+                perspective: '1000px'
+              }}
+            >
+              <motion.div
+                whileHover={{ rotateY: i % 2 === 0 ? 5 : -5, y: -5 }}
+                className="glass-panel"
+                style={{ 
+                  padding: '32px', 
+                  borderRadius: '30px', 
+                  position: 'relative', 
+                  overflow: 'hidden',
+                  background: 'rgba(2, 6, 23, 0.6)',
+                  border: `1px solid rgba(255,255,255,0.05)`,
+                  borderLeft: i % 2 === 0 ? `2px solid ${edu.color}` : '1px solid rgba(255,255,255,0.05)',
+                  borderRight: i % 1 === 0 && i % 2 !== 0 ? `2px solid ${edu.color}` : '1px solid rgba(255,255,255,0.05)',
+                }}
+              >
+                {/* 🏷️ Status Badge */}
+                <div style={{ 
+                  position: 'absolute', top: '16px', right: '16px',
+                  fontSize: '0.55rem', fontWeight: 900, color: edu.color,
+                  letterSpacing: '0.15em', padding: '4px 10px',
+                  background: `${edu.color}10`, borderRadius: '100px',
+                  border: `1px solid ${edu.color}20`
+                }}>
+                  {edu.status}
+                </div>
 
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '24px', opacity: 0.8 }}>
-              {edu.details}
-            </p>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  <div style={{ 
+                    width: '56px', height: '56px', borderRadius: '16px',
+                    background: `${edu.color}10`, border: `1px solid ${edu.color}30`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: edu.color, flexShrink: 0
+                  }}>
+                    {edu.icon}
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.65rem', fontWeight: 900, opacity: 0.5, color: '#fff', letterSpacing: '0.1em' }}>{edu.period}</span>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', margin: '4px 0 8px' }}>{edu.degree}</h3>
+                    <p style={{ color: edu.color, fontWeight: 700, fontSize: '0.85rem' }}>{edu.institution}</p>
+                  </div>
+                </div>
 
-            <div style={{ 
-              display: 'inline-flex', alignItems: 'center', gap: '8px', 
-              padding: '8px 16px', background: 'rgba(255,255,255,0.03)', 
-              borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)'
-            }}>
-              <Award size={14} style={{ color: edu.color }} />
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff' }}>{edu.grade}</span>
-            </div>
-          </motion.div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, margin: '20px 0', opacity: 0.8 }}>
+                  {edu.details}
+                </p>
+
+                <div style={{ 
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.05)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: edu.color }}></div>
+                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#fff' }}>{edu.grade}</span>
+                  </div>
+                  
+                  {/* Holographic Trace Icon */}
+                  <div style={{ opacity: 0.1, color: '#fff' }}>
+                    <GraduationCap size={40} />
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         ))}
       </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 768px) {
+          #education .section-title { font-size: 2.5rem; }
+          #education div[style*="justify-content"] { justify-content: flex-start !important; padding-left: 30px; }
+          #education div[style*="width: 2px"] { left: 10px !important; }
+          #education div[style*="width: 16px"] { left: 10px !important; }
+          #education .glass-panel { width: 100% !important; margin-left: 10px; }
+          #education div[style*="width: 45%"] { width: 90% !important; }
+        }
+      `}} />
     </section>
   );
 };
@@ -1502,19 +1585,30 @@ const Certificates = () => {
               position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
               background: "rgba(2, 6, 23, 0.98)",
               backdropFilter: "blur(20px)",
-              display: "flex", justifyContent: "center", alignItems: "center",
-              zIndex: 10000, padding: '24px'
+              display: "flex", 
+              flexDirection: "column",
+              justifyContent: "flex-start", // Start from top to allow scrolling
+              alignItems: "center",
+              zIndex: 10000, 
+              padding: '60px 20px 40px',
+              overflowY: 'auto' // Allow vertical scrolling
             }}
             onClick={() => setSelectedCert(null)}
           >
             <motion.button
-              whileHover={{ rotate: 90 }}
+              whileHover={{ rotate: 90, scale: 1.1 }}
               style={{
-                position: 'absolute', top: '30px', right: '30px',
-                background: 'rgba(255,255,255,0.05)', border: 'none', color: '#fff', 
-                cursor: 'pointer', width: '50px', height: '50px', borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                position: 'fixed', // Keep close button fixed while scrolling
+                top: '24px', right: '24px',
+                background: 'rgba(255,255,255,0.1)', 
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '50%',
+                width: '48px', height: '48px',
+                color: '#fff', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                zIndex: 10001
               }}
+              onClick={() => setSelectedCert(null)}
             >
               <X size={24} />
             </motion.button>
@@ -1523,22 +1617,43 @@ const Certificates = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              style={{ position: 'relative', maxWidth: '1100px', width: '100%' }}
+              style={{ 
+                position: 'relative', 
+                maxWidth: '900px', 
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={selectedCert.img}
                 alt={selectedCert.title}
                 style={{
-                  width: "100%", borderRadius: "24px",
+                  width: "auto",
+                  maxWidth: "100%",
+                  maxHeight: "90vh", // Don't let it exceed viewpoint height initially
+                  borderRadius: "12px",
                   boxShadow: "0 50px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1)",
+                  objectFit: "contain" // Ensure full certificate is shown
                 }}
               />
-              <div style={{ marginTop: '24px', textAlign: 'center' }}>
-                 <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: '8px' }}>{selectedCert.title}</h2>
-                 <p style={{ color: 'var(--text-muted)', letterSpacing: '0.2em', fontWeight: 800, textTransform: 'uppercase', fontSize: '0.8rem' }}>
-                    {selectedCert.issuer} // OFFICIAL CREDENTIAL
+              <div style={{ marginTop: '32px', textAlign: 'center', paddingBottom: '40px' }}>
+                 <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: '12px' }}>{selectedCert.title}</h2>
+                 <p style={{ color: 'var(--text-secondary)', letterSpacing: '0.1em', fontWeight: 600 }}>
+                    {selectedCert.issuer.toUpperCase()} • OFFICIAL CREDENTIAL
                  </p>
+                 <div style={{ marginTop: '24px', display: 'flex', gap: '16px', justifyContent: 'center' }}>
+                   <a 
+                     href={selectedCert.img} 
+                     download={`${selectedCert.title}.jpg`}
+                     className="btn-premium btn-primary"
+                     style={{ padding: '12px 24px', fontSize: '0.85rem' }}
+                   >
+                     Download Certificate <Download size={16} />
+                   </a>
+                 </div>
               </div>
             </motion.div>
           </motion.div>

@@ -96,6 +96,12 @@ import cert_nxtwave_alt from '../assets/certs/Nxtwave.jpeg';
 import cert_hackerrank from '../assets/certs/Hackerrank.png';
 import cert_ibm_bigdata from '../assets/certs/IBM BIg Data_page-0001.jpg';
 
+// 🏷️ Category Logos
+import logo_giet from '../assets/GIET-removebg-preview.png';
+import logo_hp from '../assets/HP-removebg-preview.png';
+import logo_nxtwave from '../assets/Nxtwave.webp';
+import logo_coursera from '../assets/coursera.webp';
+
 // --- Section Components ---
 
 const InfiniteMarquee = ({ items }) => {
@@ -1364,10 +1370,10 @@ const Certificates = () => {
 
   const categories = [
     { id: 'ALL', label: 'All' },
-    { id: 'GIET', label: 'GIET' },
-    { id: 'COURSERA', label: 'Coursera' },
-    { id: 'NXTWAVE', label: 'NxtWave' },
-    { id: 'COMPANY', label: "Company's" }
+    { id: 'GIET', label: 'GIET', logo: logo_giet },
+    { id: 'COURSERA', label: 'Coursera', logo: logo_coursera },
+    { id: 'NXTWAVE', label: 'NxtWave', logo: logo_nxtwave },
+    { id: 'COMPANY', label: "Company's", logo: logo_hp }
   ];
 
   const certifications = [
@@ -1376,9 +1382,9 @@ const Certificates = () => {
     { title: "Data Analytics Simulation", issuer: "Deloitte", img: cert_deloitte, color: "#86BC25", category: 'COMPANY' },
     { title: "Responsive Web Dev Mastery", issuer: "NxtWave", img: cert_nxtwave, color: "#22d3ee", category: 'NXTWAVE' },
     { title: "ICCOSET 2024 Conference", issuer: "GIET", img: cert_giet_conf, color: "#f97316", category: 'GIET' },
-    { title: "Python Programming Exp.", issuer: "CodTech", img: cert_codtech, color: "#3776ab", category: 'COMPANY' },
+    { title: "Python Development Exp.", issuer: "CodTech", img: cert_codtech, color: "#3776ab", category: 'COMPANY' },
     { title: "Full Stack Development", issuer: "Simplilearn", img: cert_simplilearn, color: "#ff9900", category: 'COMPANY' },
-    { title: "Neural Network Logic", issuer: "Codec", img: cert_codec, color: "#8b5cf6", category: 'COMPANY' },
+    { title: "Python Achievement Cert", issuer: "Codec", img: cert_codec, color: "#8b5cf6", category: 'COMPANY' },
     { title: "Autonomous Vehicle Sys", issuer: "NxtWave", img: cert_autonomous, color: "#06b6d4", category: 'NXTWAVE' },
     { title: "Model Fiesta 2025", issuer: "SURAVI", img: cert_suravi, color: "#ec4899", category: 'COMPANY' },
     { title: "CAD Design Foundations", issuer: "NIELIT", img: cert_cad, color: "#10b981", category: 'COMPANY' },
@@ -1419,9 +1425,18 @@ const Certificates = () => {
               border: `1px solid ${activeFilter === cat.id ? 'var(--accent-purple)' : 'rgba(255,255,255,0.08)'}`,
               background: activeFilter === cat.id ? 'rgba(139, 92, 246, 0.15)' : 'rgba(255,255,255,0.02)',
               color: activeFilter === cat.id ? '#fff' : 'rgba(255,255,255,0.5)',
-              fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer'
+              fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: '10px',
+              transition: 'all 0.3s ease'
             }}
           >
+            {cat.logo && (
+              <img 
+                src={cat.logo} 
+                alt={`${cat.label} logo`} 
+                style={{ height: '20px', width: 'auto', objectFit: 'contain' }} 
+              />
+            )}
             {cat.label}
           </button>
         ))}

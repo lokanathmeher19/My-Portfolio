@@ -1269,183 +1269,167 @@ const Skills = () => {
 const Education = () => {
   const education = [
     {
-      degree: "Bachelor of Technology",
-      major: "Computer Science & Engineering",
-      institution: "GIET University, Gunupur",
+      id: "01",
+      degree: "Computer Science Engineering",
+      institution: "GIET University",
       period: "2023 — 2027",
-      grade: "Current CGPA: 8.9",
-      details: "Specializing in Full-stack Architecture and Cybersecurity. Active member of Technical Coding Hub.",
+      grade: "8.9 CGPA",
+      label: "ACADEMIC CORE",
+      type: "B-TECH",
+      details: "Architecting high-performance full-stack architectures and resilient security protocols. Specialized focus on AI-driven computational efficiency and deep logic systems.",
       color: "#22d3ee",
-      icon: <Code2 size={24} />,
-      status: "CURRENTLY ENROLLED"
+      icon: <Code2 size={32} />,
+      stats: ["DATA STRUCTURES", "ALGORITHMS", "CYBERSECURITY"],
+      className: "col-span-12 lg:col-span-8"
     },
     {
-      degree: "Higher Secondary Education",
-      major: "Physics, Chemistry, Mathematics",
-      institution: "CHSE, Odisha",
+      id: "02",
+      degree: "Intermediate Education",
+      institution: "CHSE Board Odisha",
       period: "2021 — 2023",
-      grade: "Score: 86%",
-      details: "Focus on foundational sciences and engineering mathematics. Distinction in Physics.",
-      color: "#8b5cf6",
-      icon: <Binary size={24} />,
-      status: "COMPLETED"
+      grade: "86% SCORE",
+      label: "FOUNDATION PHASE",
+      type: "12TH",
+      details: "In-depth mastery of calculus, electromagnetic theory, and structural engineering physics with academic distinction.",
+      color: "#a855f7",
+      icon: <Binary size={26} />,
+      stats: ["MATHEMATICS", "PHYSICS", "CHEMISTRY"],
+      className: "col-span-12 lg:col-span-4"
     },
     {
-      degree: "Secondary School Education",
-      major: "General Sciences & Mathematics",
-      institution: "BSE, Odisha",
+      id: "03",
+      degree: "Secondary Education",
+      institution: "BSE Board Odisha",
       period: "2019 — 2021",
-      grade: "Score: 92%",
-      details: "Excellence in analytical logic and fundamental sciences.",
+      grade: "92% SCORE",
+      label: "SYSTEM STARTUP",
+      type: "10TH",
+      details: "Establishing core logical frameworks and foundational excellence in scientific methodologies and analytical reasoning.",
       color: "#3b82f6",
-      icon: <Terminal size={24} />,
-      status: "COMPLETED"
+      icon: <Terminal size={22} />,
+      stats: ["LOGICAL REASONING", "GENERAL SCIENCE", "MATHEMATICS"],
+      className: "col-span-12 lg:col-span-12"
     }
   ];
 
   return (
     <section id="education" className="section" style={{ padding: '160px 24px', position: 'relative' }}>
-      {/* 🔮 Background Meta-Grid */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.1, background: 'radial-gradient(circle, var(--accent-cyan) 1px, transparent 1px)', backgroundSize: '40px 40px', pointerEvents: 'none' }}></div>
-
       <SectionHeader 
-        badge="TIMELINE" 
+        badge="EDUCATIONAL ARCHITECTURE" 
         color="var(--accent-cyan)"
-        title={<><span className="text-gradient">Academic</span> Odyssey</>} 
-        desc="A specialized chronological trace of engineering evolution and academic excellence." 
+        title={<><span className="text-gradient">Scholastic</span> Infrastructure</>} 
+        desc="A high-depth documentation of academic evolution, formatted as a modular data-driven grid." 
       />
 
-      <div style={{ 
-        position: 'relative', 
-        maxWidth: '1000px', 
-        margin: '80px auto 0',
-        padding: '20px 0'
-      }}>
-        {/* ⚡ Vertical Power Line */}
-        <div style={{ 
-          position: 'absolute', left: '50%', top: 0, bottom: 0, 
-          width: '2px', background: 'linear-gradient(to bottom, transparent, rgba(34, 211, 238, 0.4), var(--accent-purple), transparent)',
-          transform: 'translateX(-50%)',
-          zIndex: 0
-        }}></div>
-
+      <div className="studio-grid" style={{ marginTop: '100px' }}>
         {education.map((edu, i) => (
-          <div key={i} style={{ 
-            display: 'flex', 
-            justifyContent: i % 2 === 0 ? 'flex-start' : 'flex-end',
-            width: '100%',
-            marginBottom: '60px',
-            position: 'relative',
-            zIndex: 1
-          }}>
-            {/* 🧿 Timeline Node */}
-            <motion.div 
-              initial={{ scale: 0, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              style={{
-                position: 'absolute', left: '50%', top: '24px',
-                width: '16px', height: '16px', borderRadius: '50%',
-                background: edu.color, transform: 'translateX(-50%)',
-                boxShadow: `0 0 20px ${edu.color}, 0 0 5px #fff`,
-                zIndex: 10
-              }}
-            >
+          <motion.div
+            key={edu.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ 
+              gridColumn: window.innerWidth > 1024 
+                ? (edu.className.includes('col-span-12') ? 'span 12' : (edu.className.includes('col-span-8') ? 'span 8' : 'span 4'))
+                : 'span 12'
+            }}
+          >
+            <div className="studio-card" style={{ 
+              borderColor: `${edu.color}15`, 
+              height: '100%',
+              minHeight: edu.type === 'B-TECH' ? '450px' : '320px',
+              padding: '50px',
+              background: `linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(2, 6, 23, 0.5) 100%)`,
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {/* 📊 Holographic Grid Overlay */}
+              <div 
+                className="holo-grid" 
+                style={{ position: 'absolute', inset: 0, opacity: 0.1, pointerEvents: 'none' }} 
+              />
+              
+              {/* 🌈 Dynamic Glow */}
               <div style={{ 
-                position: 'absolute', inset: '-6px', borderRadius: '50%', 
-                border: `1px solid ${edu.color}`, opacity: 0.3 
-              }}></div>
-            </motion.div>
+                position: 'absolute', top: '-100px', right: '-100px', 
+                width: '300px', height: '300px', 
+                background: `radial-gradient(circle, ${edu.color}10 0%, transparent 70%)`,
+                filter: 'blur(50px)', pointerEvents: 'none'
+              }} />
 
-            {/* 📄 Glass Card */}
-            <motion.div
-              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                width: '45%',
-                perspective: '1000px'
-              }}
-            >
-              <motion.div
-                whileHover={{ rotateY: i % 2 === 0 ? 5 : -5, y: -5 }}
-                className="glass-panel"
-                style={{ 
-                  padding: '32px', 
-                  borderRadius: '30px', 
-                  position: 'relative', 
-                  overflow: 'hidden',
-                  background: 'rgba(2, 6, 23, 0.6)',
-                  border: `1px solid rgba(255,255,255,0.05)`,
-                  borderLeft: i % 2 === 0 ? `2px solid ${edu.color}` : '1px solid rgba(255,255,255,0.05)',
-                  borderRight: i % 1 === 0 && i % 2 !== 0 ? `2px solid ${edu.color}` : '1px solid rgba(255,255,255,0.05)',
-                }}
-              >
-                {/* 🏷️ Status Badge */}
-                <div style={{ 
-                  position: 'absolute', top: '16px', right: '16px',
-                  fontSize: '0.55rem', fontWeight: 900, color: edu.color,
-                  letterSpacing: '0.15em', padding: '4px 10px',
-                  background: `${edu.color}10`, borderRadius: '100px',
-                  border: `1px solid ${edu.color}20`
-                }}>
-                  {edu.status}
-                </div>
-
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                  <div style={{ 
-                    width: '56px', height: '56px', borderRadius: '16px',
-                    background: `${edu.color}10`, border: `1px solid ${edu.color}30`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: edu.color, flexShrink: 0
-                  }}>
-                    {edu.icon}
-                  </div>
-                  <div>
-                    <span style={{ fontSize: '0.65rem', fontWeight: 900, opacity: 0.5, color: '#fff', letterSpacing: '0.1em' }}>{edu.period}</span>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff', margin: '4px 0 8px' }}>{edu.degree}</h3>
-                    <p style={{ color: edu.color, fontWeight: 700, fontSize: '0.85rem' }}>{edu.institution}</p>
-                  </div>
-                </div>
-
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6, margin: '20px 0', opacity: 0.8 }}>
-                  {edu.details}
-                </p>
-
-                <div style={{ 
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.05)'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: edu.color }}></div>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#fff' }}>{edu.grade}</span>
+              <div style={{ position: 'relative', zIndex: 10 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                     <div style={{ 
+                       width: '56px', height: '56px', borderRadius: '16px', 
+                       background: `${edu.color}15`, border: `1px solid ${edu.color}33`,
+                       display: 'flex', alignItems: 'center', justifyContent: 'center',
+                       color: edu.color, boxShadow: `0 10px 30px ${edu.color}20`
+                     }}>
+                        {edu.icon}
+                     </div>
+                     <div>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 900, color: edu.color, letterSpacing: '0.2em', display: 'block' }}>
+                          {edu.label}
+                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                           <h4 style={{ fontSize: '1.2rem', color: '#fff', fontWeight: 800 }}>{edu.type}</h4>
+                           <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }}></div>
+                           <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{edu.period}</span>
+                        </div>
+                     </div>
                   </div>
                   
-                  {/* Holographic Trace Icon */}
-                  <div style={{ opacity: 0.1, color: '#fff' }}>
-                    <GraduationCap size={40} />
+                  <div style={{ textAlign: 'right' }}>
+                    <span style={{ fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', display: 'block' }}>PERFORMANCE_INDEX</span>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 950, color: '#fff', letterSpacing: '-0.02em', textShadow: `0 0 20px ${edu.color}33` }}>
+                      {edu.grade}
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
-          </div>
+
+                <div style={{ marginBottom: '32px', maxWidth: edu.type === 'B-TECH' ? '600px' : '100%' }}>
+                  <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#fff', marginBottom: '12px', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+                    {edu.degree}
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '20px' }}>
+                    {edu.institution}
+                  </p>
+                  <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1rem', lineHeight: 1.6 }}>
+                    {edu.details}
+                  </p>
+                </div>
+
+                {edu.stats && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: 'auto' }}>
+                    {edu.stats.map(stat => (
+                      <div key={stat} className="glass-tag" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.08)' }}>
+                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: edu.color }}></div>
+                        {stat}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 🔢 Background Identifier */}
+              <div style={{ 
+                position: 'absolute', bottom: '-40px', right: '20px', 
+                fontSize: '15rem', fontWeight: 950, color: '#fff', 
+                opacity: 0.02, letterSpacing: '-0.1em', pointerEvents: 'none',
+                fontFamily: 'var(--font-heading)'
+              }}>
+                {edu.id}
+              </div>
+            </div>
+          </motion.div>
         ))}
       </div>
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        @media (max-width: 768px) {
-          #education .section-title { font-size: 2.5rem; }
-          #education div[style*="justify-content"] { justify-content: flex-start !important; padding-left: 30px; }
-          #education div[style*="width: 2px"] { left: 10px !important; }
-          #education div[style*="width: 16px"] { left: 10px !important; }
-          #education .glass-panel { width: 100% !important; margin-left: 10px; }
-          #education div[style*="width: 45%"] { width: 90% !important; }
-        }
-      `}} />
     </section>
   );
 };
+
 
 const Certificates = () => {
   const [activeFilter, setActiveFilter] = useState('ALL');

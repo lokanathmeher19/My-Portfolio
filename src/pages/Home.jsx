@@ -1270,161 +1270,244 @@ const Education = () => {
   const education = [
     {
       id: "01",
-      degree: "Computer Science Engineering",
-      institution: "GIET University",
-      period: "2023 — 2027",
-      grade: "8.9 CGPA",
-      label: "ACADEMIC CORE",
-      type: "B-TECH",
-      details: "Architecting high-performance full-stack architectures and resilient security protocols. Specialized focus on AI-driven computational efficiency and deep logic systems.",
-      color: "#22d3ee",
-      icon: <Code2 size={32} />,
-      stats: ["DATA STRUCTURES", "ALGORITHMS", "CYBERSECURITY"],
-      className: "col-span-12 lg:col-span-8"
+      degree: "Secondary Education",
+      institution: "BSE Board Odisha",
+      period: "2020 — 2022",
+      grade: "78% SCORE",
+      label: "10th",
+      details: "Establishing core logical frameworks and foundational excellence in scientific methodology.",
+      color: "#3b82f6",
+      icon: <Terminal size={24} />,
+      subjects: ["Mathematics", "General Science", "Social Studies", "English", "Regional Language", "Alternative Hindi"]
     },
     {
       id: "02",
-      degree: "Intermediate Education",
+      degree: "Higher Secondary (PCM)",
       institution: "CHSE Board Odisha",
-      period: "2021 — 2023",
-      grade: "86% SCORE",
-      label: "FOUNDATION PHASE",
-      type: "12TH",
-      details: "In-depth mastery of calculus, electromagnetic theory, and structural engineering physics with academic distinction.",
+      period: "2022 — 2024",
+      grade: "68% SCORE",
+      label: "12th",
+      details: "Mastery of calculus, electromagnetic theory, and structural engineering physics with academic distinction.",
       color: "#a855f7",
-      icon: <Binary size={26} />,
-      stats: ["MATHEMATICS", "PHYSICS", "CHEMISTRY"],
-      className: "col-span-12 lg:col-span-4"
+      icon: <Binary size={24} />,
+      subjects: ["Advanced Mathematics", "Physics", "Chemistry", "English", "Information Technology"]
     },
     {
       id: "03",
-      degree: "Secondary Education",
-      institution: "BSE Board Odisha",
-      period: "2019 — 2021",
-      grade: "92% SCORE",
-      label: "SYSTEM STARTUP",
-      type: "10TH",
-      details: "Establishing core logical frameworks and foundational excellence in scientific methodologies and analytical reasoning.",
-      color: "#3b82f6",
-      icon: <Terminal size={22} />,
-      stats: ["LOGICAL REASONING", "GENERAL SCIENCE", "MATHEMATICS"],
-      className: "col-span-12 lg:col-span-12"
+      degree: "Computer Science Engineering",
+      institution: "GIET Bhubneswar (B.Tech)",
+      period: "2024 — 2028",
+      grade: "8.5 CGPA",
+      label: "GRADUATION",
+      details: "Executing high-performance full-stack architectures and resilient security protocols. Specialized focus on AI-driven computational efficiency.",
+      color: "#22d3ee",
+      icon: <Code2 size={24} />,
+      subjects: ["Data Structures", "Algorithms", "DBMS", "Operating Systems", "Computer Networks", "OOPs Concepts", "Web Technologies", "AI Foundations"]
     }
   ];
 
+  const displayEducation = [...education].reverse();
+
   return (
-    <section id="education" className="section" style={{ padding: '160px 24px', position: 'relative' }}>
+    <section id="education" className="section" style={{ padding: '120px 24px', position: 'relative', overflow: 'hidden' }}>
       <SectionHeader 
-        badge="EDUCATIONAL ARCHITECTURE" 
+        badge="EDUCATION" 
         color="var(--accent-cyan)"
-        title={<><span className="text-gradient">Scholastic</span> Infrastructure</>} 
-        desc="A high-depth documentation of academic evolution, formatted as a modular data-driven grid." 
+        title={<><span className="text-gradient">Scholastic</span> Logic-Core</>} 
+        desc="A procedural circuit documenting the development of technical intelligence." 
       />
 
-      <div className="studio-grid" style={{ marginTop: '100px' }}>
-        {education.map((edu, i) => (
-          <motion.div
-            key={edu.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ 
-              gridColumn: window.innerWidth > 1024 
-                ? (edu.className.includes('col-span-12') ? 'span 12' : (edu.className.includes('col-span-8') ? 'span 8' : 'span 4'))
-                : 'span 12'
-            }}
-          >
-            <div className="studio-card" style={{ 
-              borderColor: `${edu.color}15`, 
-              height: '100%',
-              minHeight: edu.type === 'B-TECH' ? '450px' : '320px',
-              padding: '50px',
-              background: `linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(2, 6, 23, 0.5) 100%)`,
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
-              {/* 📊 Holographic Grid Overlay */}
+      <div style={{
+        maxWidth: '900px',
+        margin: '80px auto 0',
+        position: 'relative',
+        padding: '0 20px 0 60px'
+      }}>
+        {/* 🌟 Vertical Timeline Line */}
+        <div style={{
+          position: 'absolute',
+          left: '30px',
+          top: '20px',
+          bottom: '20px',
+          width: '2px',
+          background: 'linear-gradient(to bottom, #22d3ee, #a855f7, #3b82f6)',
+          opacity: 0.3
+        }} />
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '50px'
+        }}>
+          {displayEducation.map((edu, i) => (
+            <div key={edu.id} style={{ position: 'relative' }}>
+              {/* 📍 Timeline Node */}
               <div 
-                className="holo-grid" 
-                style={{ position: 'absolute', inset: 0, opacity: 0.1, pointerEvents: 'none' }} 
+                style={{
+                  position: 'absolute',
+                  left: '-40px',
+                  top: '40px',
+                  transform: 'translate(-50%, -50%)',
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  background: '#0a0f1e',
+                  border: `3px solid ${edu.color}`,
+                  boxShadow: `0 0 15px ${edu.color}`,
+                  zIndex: 2
+                }} 
               />
-              
-              {/* 🌈 Dynamic Glow */}
-              <div style={{ 
-                position: 'absolute', top: '-100px', right: '-100px', 
-                width: '300px', height: '300px', 
-                background: `radial-gradient(circle, ${edu.color}10 0%, transparent 70%)`,
-                filter: 'blur(50px)', pointerEvents: 'none'
-              }} />
 
-              <div style={{ position: 'relative', zIndex: 10 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                     <div style={{ 
-                       width: '56px', height: '56px', borderRadius: '16px', 
-                       background: `${edu.color}15`, border: `1px solid ${edu.color}33`,
-                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                       color: edu.color, boxShadow: `0 10px 30px ${edu.color}20`
-                     }}>
-                        {edu.icon}
-                     </div>
-                     <div>
-                        <span style={{ fontSize: '0.65rem', fontWeight: 900, color: edu.color, letterSpacing: '0.2em', display: 'block' }}>
-                          {edu.label}
-                        </span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                           <h4 style={{ fontSize: '1.2rem', color: '#fff', fontWeight: 800 }}>{edu.type}</h4>
-                           <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }}></div>
-                           <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{edu.period}</span>
-                        </div>
-                     </div>
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="glass-panel"
+                style={{
+                  padding: '30px 35px',
+                  borderRadius: '20px',
+                  background: 'rgba(5, 8, 22, 0.5)',
+                  backdropFilter: 'blur(20px)',
+                  border: `1px solid rgba(255, 255, 255, 0.05)`,
+                  borderLeft: `4px solid ${edu.color}`,
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '24px',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                whileHover={{
+                  transform: 'translateX(10px)',
+                  borderColor: `${edu.color}88`,
+                  background: 'rgba(5, 8, 22, 0.75)',
+                }}
+              >
+                {/* Left Side: Basic Info */}
+                <div style={{ flex: '1 1 400px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                    <span style={{ 
+                      fontSize: '0.7rem', 
+                      fontWeight: 900, 
+                      color: edu.color, 
+                      letterSpacing: '0.2em',
+                      textTransform: 'uppercase'
+                    }}>
+                      {edu.label}
+                    </span>
+                    <span style={{ 
+                      fontSize: '0.75rem', 
+                      fontWeight: 700, 
+                      color: 'rgba(255, 255, 255, 0.4)',
+                      background: 'rgba(255,255,255,0.03)',
+                      padding: '3px 10px',
+                      borderRadius: '100px',
+                      border: '1px solid rgba(255,255,255,0.05)'
+                    }}>
+                      {edu.period}
+                    </span>
                   </div>
-                  
-                  <div style={{ textAlign: 'right' }}>
-                    <span style={{ fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', display: 'block' }}>PERFORMANCE_INDEX</span>
-                    <div style={{ fontSize: '1.8rem', fontWeight: 950, color: '#fff', letterSpacing: '-0.02em', textShadow: `0 0 20px ${edu.color}33` }}>
-                      {edu.grade}
-                    </div>
-                  </div>
-                </div>
 
-                <div style={{ marginBottom: '32px', maxWidth: edu.type === 'B-TECH' ? '600px' : '100%' }}>
-                  <h3 style={{ fontSize: '2.4rem', fontWeight: 900, color: '#fff', marginBottom: '12px', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+                  <h3 style={{ 
+                    fontSize: '1.6rem', 
+                    fontWeight: 950, 
+                    color: '#fff', 
+                    marginBottom: '6px', 
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1.2
+                  }}>
                     {edu.degree}
                   </h3>
-                  <p style={{ color: 'var(--text-secondary)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '20px' }}>
+                  
+                  <p style={{ 
+                    color: 'rgba(255, 255, 255, 0.8)', 
+                    fontSize: '1rem', 
+                    fontWeight: 600, 
+                    marginBottom: '12px' 
+                  }}>
                     {edu.institution}
                   </p>
-                  <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1rem', lineHeight: 1.6 }}>
+
+                  <p style={{ 
+                    color: 'rgba(255, 255, 255, 0.45)', 
+                    fontSize: '0.9rem', 
+                    lineHeight: 1.5,
+                    marginBottom: '20px',
+                    maxWidth: '600px'
+                  }}>
                     {edu.details}
                   </p>
+
+                  <div style={{ 
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    gap: '6px', 
+                    padding: '8px 16px', 
+                    background: `${edu.color}15`, 
+                    borderRadius: '10px', 
+                    border: `1px solid ${edu.color}33`
+                  }}>
+                    <Award size={14} style={{ color: edu.color }} />
+                    <span style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fff' }}>
+                      {edu.grade}
+                    </span>
+                  </div>
                 </div>
 
-                {edu.stats && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: 'auto' }}>
-                    {edu.stats.map(stat => (
-                      <div key={stat} className="glass-tag" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.08)' }}>
-                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: edu.color }}></div>
-                        {stat}
-                      </div>
+                {/* Right Side: Subjects Tags */}
+                <div style={{ flex: '1 1 250px', display: 'flex', flexDirection: 'column', gap: '10px', zIndex: 1 }}>
+                  <h4 style={{ fontSize: '0.8rem', fontWeight: 800, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>
+                    Core Subjects
+                  </h4>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {edu.subjects.map((subject, subIndex) => (
+                      <motion.span
+                        key={subIndex}
+                        className="glass-tag"
+                        whileHover={{ 
+                          scale: 1.05, 
+                          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                          borderColor: `${edu.color}44`,
+                          boxShadow: `0 0 20px ${edu.color}15`
+                        }}
+                        style={{
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          fontSize: '0.8rem',
+                          fontWeight: 600,
+                          color: 'rgba(255,255,255,0.7)',
+                          background: 'rgba(255,255,255,0.02)',
+                          border: '1px solid rgba(255,255,255,0.05)',
+                          cursor: 'default',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        {subject}
+                      </motion.span>
                     ))}
                   </div>
-                )}
-              </div>
+                </div>
 
-              {/* 🔢 Background Identifier */}
-              <div style={{ 
-                position: 'absolute', bottom: '-40px', right: '20px', 
-                fontSize: '15rem', fontWeight: 950, color: '#fff', 
-                opacity: 0.02, letterSpacing: '-0.1em', pointerEvents: 'none',
-                fontFamily: 'var(--font-heading)'
-              }}>
-                {edu.id}
-              </div>
+                {/* Watermark Icon */}
+                <div style={{
+                  position: 'absolute',
+                  right: '-10px',
+                  bottom: '-20px',
+                  opacity: 0.02,
+                  color: '#fff',
+                  transform: 'scale(4)',
+                  pointerEvents: 'none',
+                  zIndex: 0
+                }}>
+                  {edu.icon}
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1647,6 +1730,48 @@ const Certificates = () => {
   );
 };
 
+const CoreAchievements = () => {
+  const stats = [
+    { label: "PROJECTS_DEPLOYED", value: "15+", sub: "Full-stack & AI", color: "#22d3ee" },
+    { label: "CERTS_VALIDATED", value: "25+", sub: "Global Credentials", color: "#a855f7" },
+    { label: "ALGORITHMIC_SCORE", value: "1.2k+", sub: "HackerRank Gold", color: "#3b82f6" },
+    { label: "GITHUB_COMMITS", value: "850+", sub: "Yearly Activity", color: "#10b981" }
+  ];
+
+  return (
+    <section id="achievements" className="section" style={{ padding: '80px 24px' }}>
+      <div className="studio-grid">
+        {stats.map((stat, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -10, background: 'rgba(255,255,255,0.03)', borderColor: stat.color + '33' }}
+            style={{ 
+              gridColumn: window.innerWidth > 1024 ? 'span 3' : 'span 6',
+              padding: '60px 40px',
+              textAlign: 'center',
+              background: 'rgba(255,255,255,0.01)',
+              border: '1px solid rgba(255,255,255,0.05)',
+              borderRadius: '32px',
+              position: 'relative',
+              overflow: 'hidden',
+              transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: `linear-gradient(90deg, transparent, ${stat.color}, transparent)` }}></div>
+            <div style={{ fontSize: '3.5rem', fontWeight: 950, color: '#fff', marginBottom: '8px', letterSpacing: '-0.05em' }}>{stat.value}</div>
+            <div style={{ fontSize: '0.75rem', fontWeight: 900, color: stat.color, letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '12px' }}>{stat.label}</div>
+            <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>{stat.sub}</div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+
 const About = () => (
   <section id="about" className="section">
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '60px', alignItems: 'center' }}>
@@ -1750,18 +1875,25 @@ export default function Home() {
 
       <Projects />
       <Skills />
+      <CoreAchievements />
       <Certificates />
       <Education />
       
-      <section id="resume" className="section" style={{ textAlign: 'center' }}>
+      <section id="resume" className="section" style={{ padding: '120px 24px', textAlign: 'center' }}>
+        <SectionHeader 
+          badge="RESUME" 
+          color="var(--accent-purple)"
+          title={<><span className="text-gradient">Professional</span> Resume</>} 
+          desc="Access academic credentials and technical capabilities profile." 
+        />
+
          <motion.div 
            initial={{ opacity: 0, scale: 0.95 }}
            whileInView={{ opacity: 1, scale: 1 }}
            viewport={{ once: true }}
            className="glass-panel" 
-           style={{ padding: '80px 40px' }}
+           style={{ padding: '60px 40px', maxWidth: '800px', margin: '60px auto 0' }}
          >
-            <h2 className="section-title" style={{ marginBottom: '24px' }}>Technical Documentation</h2>
             <p style={{ color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '500px', margin: '0 auto 40px' }}>
                Access my detailed resume for a full breakdown of certifications, coursework, and professional achievements.
             </p>

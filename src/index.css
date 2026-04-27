@@ -93,13 +93,32 @@ body {
   100% { transform: scale(3.5); opacity: 0; }
 }
 
-/* 🕸️ Decorative Grid */
+/* 🕸️ Decorative Grid & System Line */
 .page-root::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 40px 40px, 100% 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.page-root::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    rgba(34, 211, 238, 0.05) 5%, 
+    rgba(34, 211, 238, 0.05) 95%, 
+    transparent
+  );
   z-index: -1;
   pointer-events: none;
 }

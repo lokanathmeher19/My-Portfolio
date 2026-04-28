@@ -1936,11 +1936,6 @@ export default function Home() {
 
   return (
     <div className="page-root">
-      {/* 🚀 Premium Scroll Progress */}
-      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '3px', zIndex: 2000 }}>
-        <div style={{ width: `${scrollProgress}%`, height: '100%', background: 'linear-gradient(90deg, var(--accent-cyan), var(--accent-purple))', transition: 'width 0.1s ease-out' }}></div>
-      </div>
-
       <Hero />
 
       <Projects />

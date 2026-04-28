@@ -14,7 +14,7 @@ const ParticlesBackground = () => {
         let particlesArray = [];
 
         // Mouse object to track interaction
-        const mouse = { x: null, y: null, radius: 120 };
+        const mouse = { x: null, y: null, radius: 200 };
 
         const handleMouseMove = (event) => {
             mouse.x = event.clientX;
@@ -55,8 +55,8 @@ const ParticlesBackground = () => {
                         const forceDirectionX = dx / distance;
                         const forceDirectionY = dy / distance;
                         const force = (mouse.radius - distance) / mouse.radius;
-                        const directionX = forceDirectionX * force * 2;
-                        const directionY = forceDirectionY * force * 2;
+                        const directionX = forceDirectionX * force * 5;
+                        const directionY = forceDirectionY * force * 5;
 
                         this.x -= directionX;
                         this.y -= directionY;
@@ -82,7 +82,7 @@ const ParticlesBackground = () => {
 
         const init = () => {
             particlesArray = [];
-            const numberOfParticles = Math.min(120, (canvas.width * canvas.height) / 8000);
+            const numberOfParticles = Math.min(60, (canvas.width * canvas.height) / 12000);
             for (let i = 0; i < numberOfParticles; i++) {
                 particlesArray.push(new Particle());
             }
@@ -117,11 +117,11 @@ const ParticlesBackground = () => {
                     const dx = particlesArray[i].x - mouse.x;
                     const dy = particlesArray[i].y - mouse.y;
                     const distSq = dx * dx + dy * dy;
-                    if (distSq < 15000) {
+                    if (distSq < 40000) {
                         const distance = Math.sqrt(distSq);
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 210, 255, ${0.25 - distance / 1000})`;
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = `rgba(0, 210, 255, ${0.35 - distance / 200})`;
+                        ctx.lineWidth = 1.5;
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                         ctx.lineTo(mouse.x, mouse.y);
                         ctx.stroke();

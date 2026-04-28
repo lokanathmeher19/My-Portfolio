@@ -5,15 +5,20 @@ export default function Preloader() {
     const [counter, setCounter] = useState(0);
 
     useEffect(() => {
+        let animationFrameId;
         const startTime = Date.now();
         const duration = 1600;
 
         const update = () => {
             const p = Math.min(100, ((Date.now() - startTime) / duration) * 100);
             setCounter(Math.floor(p));
-            if (p < 100) requestAnimationFrame(update);
+            if (p < 100) {
+                animationFrameId = requestAnimationFrame(update);
+            }
         };
-        requestAnimationFrame(update);
+        animationFrameId = requestAnimationFrame(update);
+
+        return () => cancelAnimationFrame(animationFrameId);
     }, []);
 
     // 🥢 8-Panel Column Grid Structure

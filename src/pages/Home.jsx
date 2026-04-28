@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import emailjs from 'emailjs-com';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { 
   MapPin, 
@@ -44,6 +46,7 @@ import {
   Lock,
   GraduationCap,
   Maximize2,
+  Briefcase,
   X
 } from 'lucide-react';
 
@@ -139,23 +142,25 @@ const Hero = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
-    const sequence = async () => {
-      await new Promise(r => setTimeout(r, 1800)); // Initial intro delay
-      
-      // First Reveal Cycle
-      setIsFlipped(true);
-      await new Promise(r => setTimeout(r, 1000));
-      setIsFlipped(false);
-      
-      await new Promise(r => setTimeout(r, 5000)); // Significant pause before next flip
-      
-      // Second Reveal Cycle
-      setIsFlipped(true);
-      await new Promise(r => setTimeout(r, 1000));
-      setIsFlipped(false);
-    };
+    let isMounted = true;
+    
+    const t1 = setTimeout(() => {
+      if (isMounted) setIsFlipped(true);
+      const t2 = setTimeout(() => {
+        if (isMounted) setIsFlipped(false);
+        const t3 = setTimeout(() => {
+          if (isMounted) setIsFlipped(true);
+          const t4 = setTimeout(() => {
+            if (isMounted) setIsFlipped(false);
+          }, 1000);
+        }, 5000);
+      }, 1000);
+    }, 1800);
 
-    sequence();
+    return () => {
+      isMounted = false;
+      clearTimeout(t1);
+    };
   }, []);
 
   return (
@@ -569,8 +574,12 @@ const ProjectCard = ({ p }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-5deg", "5deg"]);
+  const springConfig = { stiffness: 150, damping: 20 };
+  const mouseXSpring = useSpring(mouseX, springConfig);
+  const mouseYSpring = useSpring(mouseY, springConfig);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -916,9 +925,9 @@ const FloatingLogos = () => {
             width: `${logo.size}px`,
             left: logo.left,
             top: logo.top,
-            filter: `blur(${logo.blur}) drop-shadow(0 0 10px rgba(255,255,255,0.08))`,
+            opacity: logo.opacity * 0.4,
             transformBox: 'fill-box',
-            willChange: 'transform, opacity'
+            willChange: 'transform'
           }}
         />
       ))}
@@ -946,9 +955,9 @@ const SecurityBackground = () => {
         <motion.img
           key={i}
           src={icon.url}
-          animate={{ x: [0, 30, 0], y: [0, -20, 0], opacity: [0.06, 0.12, 0.06], rotate: [0, 5, -5, 0] }}
+          animate={{ x: [0, 30, 0], y: [0, -20, 0], opacity: [0.03, 0.08, 0.03], rotate: [0, 5, -5, 0] }}
           transition={{ duration: 8 + i, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
-          style={{ position: 'absolute', width: `${icon.size}px`, left: icon.left, top: icon.top, filter: icon.filter || 'grayscale(0.8)', transformBox: 'fill-box', zIndex: 1 }}
+          style={{ position: 'absolute', width: `${icon.size}px`, left: icon.left, top: icon.top, opacity: 0.05, transformBox: 'fill-box', zIndex: 1 }}
         />
       ))}
     </div>
@@ -974,9 +983,9 @@ const DevOpsBackground = () => {
         <motion.img
           key={i}
           src={icon.url}
-          animate={{ x: [0, -25, 0], y: [0, 25, 0], opacity: [0.06, 0.12, 0.06], rotate: [0, -8, 8, 0] }}
+          animate={{ x: [0, -25, 0], y: [0, 25, 0], opacity: [0.03, 0.08, 0.03], rotate: [0, -8, 8, 0] }}
           transition={{ duration: 9 + i, repeat: Infinity, ease: "easeInOut", delay: icon.delay }}
-          style={{ position: 'absolute', width: `${icon.size}px`, left: icon.left, top: icon.top, filter: icon.filter || 'grayscale(0.8)', transformBox: 'fill-box', zIndex: 1 }}
+          style={{ position: 'absolute', width: `${icon.size}px`, left: icon.left, top: icon.top, opacity: 0.05, transformBox: 'fill-box', zIndex: 1 }}
         />
       ))}
     </div>
@@ -1020,7 +1029,7 @@ const MernBackground = () => {
           animate={{ 
             x: [0, -30, 0],
             y: [0, 15, 0],
-            opacity: [0.08, 0.15, 0.08],
+            opacity: [0.03, 0.08, 0.03],
             rotate: [0, -10, 10, 0]
           }}
           transition={{ 
@@ -1034,7 +1043,7 @@ const MernBackground = () => {
             width: `${icon.size}px`,
             left: icon.left,
             top: icon.top,
-            filter: icon.filter || 'grayscale(0.8)',
+            opacity: 0.05,
             transformBox: 'fill-box',
             zIndex: 1
           }}
@@ -1813,43 +1822,104 @@ const About = () => (
   </section>
 );
 
-const Contact = () => (
-  <section id="contact" className="section">
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="glass-panel" 
-      style={{ padding: '80px 60px', borderRadius: '40px' }}
-    >
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px' }}>
-        <div>
-          <h2 className="section-title" style={{ marginBottom: '24px' }}>Let's Build Something Great.</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '40px' }}>Available for freelance projects, open-source collaboration, and strategic consultations.</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <a href="mailto:meherlokanath314@gmail.com" style={{ color: 'var(--text-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '1.1rem' }}>
-              meherlokanath314@gmail.com
-            </a>
-            <a href="https://www.linkedin.com/in/lokanath-meher-a79506353/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '1.1rem' }}>
-              <div style={{ width: 40, height: 40, borderRadius: '12px', background: 'rgba(255, 255, 255, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-purple)' }}>
-                <Linkedin size={20} />
-              </div> 
-              LinkedIn Profile
-            </a>
+const Contact = () => {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    const toastId = toast.loading("Sending message...");
+
+    emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: form.name,
+        reply_to: form.email,
+        message: form.message,
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    )
+      .then(() => {
+        toast.success("Message sent successfully!", { id: toastId });
+        setForm({ name: '', email: '', message: '' });
+      })
+      .catch((err) => {
+        toast.error("Failed to send message. Please try again later.", { id: toastId });
+        console.error("EmailJS Error:", err);
+      });
+  };
+
+  return (
+    <section id="contact" className="section">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="glass-panel" 
+        style={{ padding: '80px 60px', borderRadius: '40px' }}
+      >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px' }}>
+          <div>
+            <h2 className="section-title" style={{ marginBottom: '24px' }}>Let's Build Something Great.</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '40px' }}>Available for freelance projects, open-source collaboration, and strategic consultations.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <a href="mailto:meherlokanath314@gmail.com" style={{ color: 'var(--text-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '1.1rem' }}>
+                meherlokanath314@gmail.com
+              </a>
+              <a href="https://www.linkedin.com/in/lokanath-meher-a79506353/" target="_blank" rel="noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '16px', fontSize: '1.1rem' }}>
+                <div style={{ width: 40, height: 40, borderRadius: '12px', background: 'rgba(255, 255, 255, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-purple)' }}>
+                  <Linkedin size={20} />
+                </div> 
+                LinkedIn Profile
+              </a>
+            </div>
           </div>
+          <form style={{ display: 'grid', gap: '20px' }} onSubmit={handleSubmit}>
+             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+                <input 
+                  type="text" 
+                  name="name" 
+                  value={form.name} 
+                  onChange={handleChange} 
+                  placeholder="Name" 
+                  required 
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '12px', color: '#fff' }} 
+                />
+                <input 
+                  type="email" 
+                  name="email" 
+                  value={form.email} 
+                  onChange={handleChange} 
+                  placeholder="Email" 
+                  required 
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '12px', color: '#fff' }} 
+                />
+             </div>
+             <textarea 
+               name="message" 
+               value={form.message} 
+               onChange={handleChange} 
+               placeholder="Message" 
+               rows="5" 
+               required 
+               style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '12px', color: '#fff', resize: 'none' }}
+             ></textarea>
+             <button type="submit" className="btn-premium btn-primary" style={{ width: 'fit-content' }}>Send Message <Send size={18} /></button>
+          </form>
         </div>
-        <form style={{ display: 'grid', gap: '20px' }} onSubmit={e => e.preventDefault()}>
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
-              <input type="text" placeholder="Name" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '12px', color: '#fff' }} />
-              <input type="email" placeholder="Email" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '12px', color: '#fff' }} />
-           </div>
-           <textarea placeholder="Message" rows="5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', padding: '16px', borderRadius: '12px', color: '#fff', resize: 'none' }}></textarea>
-           <button className="btn-premium btn-primary" style={{ width: 'fit-content' }}>Send Message <Send size={18} /></button>
-        </form>
-      </div>
-    </motion.div>
-  </section>
-);
+      </motion.div>
+    </section>
+  );
+};
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -1887,18 +1957,75 @@ export default function Home() {
           desc="Access academic credentials and technical capabilities profile." 
         />
 
-         <motion.div 
-           initial={{ opacity: 0, scale: 0.95 }}
-           whileInView={{ opacity: 1, scale: 1 }}
-           viewport={{ once: true }}
-           className="glass-panel" 
-           style={{ padding: '60px 40px', maxWidth: '800px', margin: '60px auto 0' }}
-         >
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '500px', margin: '0 auto 40px' }}>
-               Access my detailed resume for a full breakdown of certifications, coursework, and professional achievements.
+        <div style={{
+          maxWidth: '1100px',
+          margin: '60px auto 0',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '40px',
+          textAlign: 'left'
+        }}>
+          {/* Left Side: Summary & Meta */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="glass-panel"
+            style={{ padding: '40px', borderRadius: '24px', background: 'rgba(5, 8, 22, 0.5)', border: '1px solid rgba(255,255,255,0.05)' }}
+          >
+            <h3 style={{ fontSize: '1.5rem', color: '#fff', fontWeight: 800, marginBottom: '16px' }}>Candidate Overview</h3>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '24px' }}>
+              Highly adaptable Computer Science Engineer focused on crafting performance-critical digital solutions. Deep commitment to architectural modularity, clean design systems, and iterative algorithmic enhancements.
             </p>
-            <Link to="/resume" className="btn-premium btn-primary">Download Case Study PDF <Download size={18} /></Link>
-         </motion.div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Briefcase size={18} style={{ color: 'var(--accent-cyan)' }} />
+                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem' }}>Open to Internships & Full-time Roles</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <MapPin size={18} style={{ color: 'var(--accent-purple)' }} />
+                <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem' }}>Bhubaneswar, India</span>
+              </div>
+            </div>
+
+            <Link to="/resume" className="btn-premium btn-primary" style={{ width: '100%', textAlign: 'center', justifyContent: 'center' }}>
+              View Detailed PDF Resume <Download size={18} style={{ marginLeft: '8px' }} />
+            </Link>
+          </motion.div>
+
+          {/* Right Side: Core Competencies */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="glass-panel"
+            style={{ padding: '40px', borderRadius: '24px', background: 'rgba(5, 8, 22, 0.5)', border: '1px solid rgba(255,255,255,0.05)' }}
+          >
+            <h3 style={{ fontSize: '1.5rem', color: '#fff', fontWeight: 800, marginBottom: '16px' }}>Technical Matrix</h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {[
+                { domain: "Full-Stack Architecture", stack: "React, Node.js, Vite, JavaScript", pct: 90, color: '#22d3ee' },
+                { domain: "System Foundations", stack: "Data Structures, Algorithms, DBMS", pct: 85, color: '#a855f7' },
+                { domain: "Styling & Design Systems", stack: "Vanilla CSS, Animation libraries", pct: 95, color: '#3b82f6' }
+              ].map((item, i) => (
+                <div key={i}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ color: '#fff', fontSize: '0.95rem', fontWeight: 700 }}>{item.domain}</span>
+                    <span style={{ color: item.color, fontSize: '0.9rem', fontWeight: 800 }}>{item.pct}%</span>
+                  </div>
+                  <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden', marginBottom: '6px' }}>
+                    <div style={{ width: `${item.pct}%`, height: '100%', background: item.color, borderRadius: '10px' }} />
+                  </div>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem' }}>{item.stack}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       <About />

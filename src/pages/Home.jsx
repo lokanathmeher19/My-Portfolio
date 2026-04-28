@@ -1782,42 +1782,75 @@ const CoreAchievements = () => {
 
 
 const About = () => (
-  <section id="about" className="section">
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '60px', alignItems: 'center' }}>
+  <section id="about" className="section" style={{ padding: '100px 24px' }}>
+    <SectionHeader 
+      badge="ABOUT ME" 
+      color="var(--accent-purple)"
+      title={<><span className="text-gradient">Core</span> Identity</>} 
+      desc="Mapping the technical frameworks and design philosophies behind the creator." 
+    />
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '60px', alignItems: 'center', marginTop: '60px' }}>
+      
+      {/* Image with modern background decoration */}
       <motion.div 
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        style={{ justifySelf: 'center' }}
+        style={{ justifySelf: 'center', position: 'relative' }}
       >
-         <div style={{ 
-           width: '240px', height: '280px', borderRadius: '24px', overflow: 'hidden', 
-           border: '1px solid rgba(255,255,255,0.08)', padding: '8px', background: 'rgba(255,255,255,0.02)',
-           boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-         }}>
-            <img 
-              src={photo} 
-              alt="About" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', borderRadius: '18px' }} 
-            />
-         </div>
+        <div style={{
+          position: 'absolute', inset: '-20px', background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(139, 92, 246, 0.2))',
+          filter: 'blur(20px)', borderRadius: '30px', zIndex: -1
+        }} />
+        <div style={{ 
+          width: '280px', height: '340px', borderRadius: '24px', overflow: 'hidden', 
+          border: '1px solid rgba(255,255,255,0.1)', padding: '10px', background: 'rgba(5, 8, 22, 0.6)',
+          backdropFilter: 'blur(20px)', boxShadow: '0 30px 60px rgba(0,0,0,0.4)'
+        }}>
+          <img 
+            src={photo} 
+            alt="About Me" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', borderRadius: '16px' }} 
+          />
+        </div>
       </motion.div>
 
+      {/* Structured Student Info */}
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
+        initial={{ opacity: 0, x: 30 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
       >
-        <span className="badge">About Me</span>
-        <h2 className="section-title">Senior Vision.<br />Junior Hustle.</h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.8, marginBottom: '24px' }}>
-          I am a 2nd-year B.Tech Engineering student specializing in creating secure, intelligent digital experiences. 
-          My focus is on developing resilient systems that redefine how we interact with technology.
+        <span className="badge">Academic Profile</span>
+        <h2 className="section-title" style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 850, lineHeight: 1.2, marginBottom: '20px' }}>
+          Building Secure, <br /><span className="text-gradient">Intelligent Systems</span>
+        </h2>
+        
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '24px' }}>
+          I am a dedicated **Computer Science Engineering student** at GIET University. My engineering philosophy revolves around writing clean, well-architected code that prioritizes execution speed and strict defensive integrations.
         </p>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: 1.8 }}>
-          Leveraging an eye for detail and a passion for architectural integrity, I build software that scales as fast as the industry evolves.
-        </p>
+
+        {/* Feature Checkpoints */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px' }}>
+          <div>
+            <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 700, marginBottom: '6px' }}>💻 Engineering</h4>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>Data Structures, algorithms, optimization routines.</p>
+          </div>
+          <div>
+            <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 700, marginBottom: '6px' }}>🛡️ Security</h4>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>Threat parsing, zero-trust system implementations.</p>
+          </div>
+          <div>
+            <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 700, marginBottom: '6px' }}>🌐 Architecture</h4>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>MERN stack ecosystems, state caching procedures.</p>
+          </div>
+          <div>
+            <h4 style={{ color: '#fff', fontSize: '1rem', fontWeight: 700, marginBottom: '6px' }}>🚀 Vision</h4>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.5 }}>Adapting neural AI tooling securely into legacy code.</p>
+          </div>
+        </div>
       </motion.div>
+
     </div>
   </section>
 );

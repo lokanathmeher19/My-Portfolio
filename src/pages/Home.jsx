@@ -281,7 +281,7 @@ const Hero = () => {
               {[
                 { label: "MERN Full-Stack Architect", icon: <Layers size={12} />, desc: "Production-ready MERN apps" },
                 { label: "Python Algorithim Expt.", icon: <Code2 size={12} />, desc: "High-speed logic core" },
-                { label: "Security & Attacks", icon: <Shield size={12} />, desc: "Zero-trust logic layers (Kali)", isDeep: true }
+                { label: "DSA Problem Solver", icon: <Brain size={12} />, desc: "Data Structures & Algorithms", isDeep: true }
               ].map((module, i) => (
                 <motion.div
                   key={module.label}

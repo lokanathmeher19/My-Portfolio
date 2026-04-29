@@ -1988,7 +1988,6 @@ export default function Home() {
     <div className="page-root">
       <Hero />
 
-      <Projects />
       <Skills />
       <CoreAchievements />
       <Certificates />
@@ -2073,6 +2072,7 @@ export default function Home() {
         </div>
       </section>
 
+      <Projects />
       <About />
       <Contact />
 
